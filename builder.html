@@ -76,6 +76,13 @@
               <fieldset>
                 <legend>Business<span class="legend-lede"></span></legend>
 
+                <div class="toggle-row">
+                  <input type="checkbox" id="show-logo" name="showLogo" checked>
+                  <span class="toggle-row__text">
+                    <label class="toggle-row__label" for="show-logo">Show logo</label>
+                  </span>
+                </div>
+
                 <div class="logo-picker">
                   <span class="logo-picker__preview" id="logo-preview">
                     <span class="visually-hidden">No logo selected</span>
@@ -212,12 +219,6 @@
 
                 <div class="toggle-list">
                   <div class="toggle-row">
-                    <input type="checkbox" id="show-logo" name="showLogo" checked>
-                    <span class="toggle-row__text">
-                      <label class="toggle-row__label" for="show-logo">Show logo</label>
-                    </span>
-                  </div>
-                  <div class="toggle-row">
                     <input type="checkbox" id="show-business-email" name="showBusinessEmail" checked>
                     <span class="toggle-row__text">
                       <label class="toggle-row__label" for="show-business-email">Show business email</label>
@@ -255,73 +256,75 @@
                   </div>
                 </div>
 
-                <div class="format-group">
-                  <span class="format-group__label" id="logo-position-label">Logo placement</span>
-                  <div class="option-picker" role="group" aria-labelledby="logo-position-label">
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoPosition" value="top-left">
-                      <span>Top left</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoPosition" value="top-right" checked>
-                      <span>Top right</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoPosition" value="bottom-left">
-                      <span>Bottom left</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoPosition" value="bottom-right">
-                      <span>Bottom right</span>
-                    </label>
+                <div id="logo-format-fields">
+                  <div class="format-group">
+                    <span class="format-group__label" id="logo-position-label">Logo placement</span>
+                    <div class="option-picker" role="group" aria-labelledby="logo-position-label">
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoPosition" value="top-left">
+                        <span>Top left</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoPosition" value="top-right" checked>
+                        <span>Top right</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoPosition" value="bottom-left">
+                        <span>Bottom left</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoPosition" value="bottom-right">
+                        <span>Bottom right</span>
+                      </label>
+                    </div>
                   </div>
-                </div>
 
-                <div class="format-group">
-                  <span class="format-group__label" id="logo-shape-label">Logo shape</span>
-                  <div class="option-picker" role="group" aria-labelledby="logo-shape-label">
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoShape" value="square">
-                      <span>Square</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoShape" value="rounded">
-                      <span>Rounded</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoShape" value="circle">
-                      <span>Circle</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoShape" value="ellipse" checked>
-                      <span>Ellipse</span>
-                    </label>
+                  <div class="format-group">
+                    <span class="format-group__label" id="logo-shape-label">Logo shape</span>
+                    <div class="option-picker" role="group" aria-labelledby="logo-shape-label">
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoShape" value="square">
+                        <span>Square</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoShape" value="rounded">
+                        <span>Rounded</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoShape" value="circle">
+                        <span>Circle</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoShape" value="ellipse" checked>
+                        <span>Ellipse</span>
+                      </label>
+                    </div>
                   </div>
-                </div>
 
-                <div class="format-group">
-                  <span class="format-group__label" id="logo-name-label">Business name with logo</span>
-                  <div class="option-picker" role="group" aria-labelledby="logo-name-label">
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoNameDisplay" value="inside" checked>
-                      <span>Inside</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoNameDisplay" value="beside">
-                      <span>Beside</span>
-                    </label>
-                    <label class="option-picker__choice">
-                      <input type="radio" name="logoNameDisplay" value="hidden">
-                      <span>Hidden</span>
-                    </label>
+                  <div class="format-group">
+                    <span class="format-group__label" id="logo-name-label">Business name with logo</span>
+                    <div class="option-picker" role="group" aria-labelledby="logo-name-label">
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoNameDisplay" value="inside" checked>
+                        <span>Inside</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoNameDisplay" value="beside">
+                        <span>Beside</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="logoNameDisplay" value="hidden">
+                        <span>Hidden</span>
+                      </label>
+                    </div>
                   </div>
-                </div>
 
-                <div class="format-group">
-                  <label class="field__label" for="logo-size">Logo and name size</label>
-                  <div class="opacity-control">
-                    <input type="range" id="logo-size" name="logoSize" min="50" max="200" step="5" value="100">
-                    <span class="opacity-control__value" id="logo-size-value">100%</span>
+                  <div class="format-group">
+                    <label class="field__label" for="logo-size">Logo and name size</label>
+                    <div class="opacity-control">
+                      <input type="range" id="logo-size" name="logoSize" min="50" max="200" step="5" value="100">
+                      <span class="opacity-control__value" id="logo-size-value">100%</span>
+                    </div>
                   </div>
                 </div>
 

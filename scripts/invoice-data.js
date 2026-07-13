@@ -7,14 +7,7 @@ InvoiceApp.formatCurrency = function (amount) {
   return "$" + safeAmount.toFixed(2);
 };
 
-/*
-  A couple of starter invoice templates. Picking one on the Builder page
-  fills the item table with realistic rows so a new user has something to
-  edit instead of a blank table. "Custom invoice" is just one empty row.
-  "taxable" here just means "assign this line to the first tax rate the
-  user has defined" at load time; templates don't know the user's actual
-  tax rate names.
-*/
+// starter templates that fill the item table with example rows
 InvoiceApp.templates = [
   {
     id: "kitchen-repair",
@@ -114,13 +107,7 @@ InvoiceApp.applyInvoiceStyleClass = function (element, styleName, spacing) {
   element.className = "invoice invoice--" + safeStyle + " invoice--spacing-" + safeSpacing;
 };
 
-/*
-  Each item points at a tax rate by id (or at nothing, for a non-taxed
-  line). Totals are built by bucketing every item's line total under its
-  assigned rate, so the invoice can show as many tax lines as the user
-  has actually used, each with its own name and amount, instead of a
-  fixed "tax" and "second tax" pair.
-*/
+// totals are built by bucketing each item's line total under its assigned tax rate
 InvoiceApp.calculateTotals = function (invoice) {
   var subtotal = 0;
   var bucketsById = {};
@@ -317,38 +304,30 @@ function formatRateWithUnit(rate, unit) {
   return InvoiceApp.formatCurrency(rate) + suffix;
 }
 
-/*
-  Builds the invoice markup used in two places: the live preview on the
-  Builder page and the full-size copy on the Print Preview page. Keeping
-  one renderer means both views can never drift apart from each other.
-  Every optional section checks the invoice's format settings, so a
-  single invoice object fully describes what gets drawn.
-*/
+// shared renderer used by both the live preview and the Print Preview page
 InvoiceApp.renderInvoiceMarkup = function (invoice) {
-  if (!invoice.items.length) {
-    return '<p class="invoice--empty">Add at least one item to see the invoice preview.</p>';
-  }
-
   var format = invoice.format;
   var totals = InvoiceApp.calculateTotals(invoice);
   var businessName = invoice.business.name || "Your business name";
   var customerName = invoice.customer.name || "Customer name";
 
-  var rowsMarkup = invoice.items.map(function (item) {
-    var lineTotal = (Number(item.quantity) || 0) * (Number(item.rate) || 0);
-    var descriptionMarkup = (format.showItemDescriptions && item.description)
-      ? "<small>" + escapeHtml(item.description) + "</small>"
-      : "";
-    return (
-      "<tr>" +
-      "<td><strong>" + escapeHtml(item.type || "Item") + "</strong>" + descriptionMarkup + "</td>" +
-      '<td class="is-numeric">' + (Number(item.quantity) || 0) + "</td>" +
-      '<td class="is-numeric">' + formatRateWithUnit(Number(item.rate) || 0, item.unit) + "</td>" +
-      '<td class="is-numeric">' + escapeHtml(findTaxRateLabel(invoice, item.taxRateId)) + "</td>" +
-      '<td class="is-numeric"><strong>' + InvoiceApp.formatCurrency(lineTotal) + "</strong></td>" +
-      "</tr>"
-    );
-  }).join("");
+  var rowsMarkup = invoice.items.length
+    ? invoice.items.map(function (item) {
+        var lineTotal = (Number(item.quantity) || 0) * (Number(item.rate) || 0);
+        var descriptionMarkup = (format.showItemDescriptions && item.description)
+          ? "<small>" + escapeHtml(item.description) + "</small>"
+          : "";
+        return (
+          "<tr>" +
+          "<td><strong>" + escapeHtml(item.type || "Item") + "</strong>" + descriptionMarkup + "</td>" +
+          '<td class="is-numeric">' + (Number(item.quantity) || 0) + "</td>" +
+          '<td class="is-numeric">' + formatRateWithUnit(Number(item.rate) || 0, item.unit) + "</td>" +
+          '<td class="is-numeric">' + escapeHtml(findTaxRateLabel(invoice, item.taxRateId)) + "</td>" +
+          '<td class="is-numeric"><strong>' + InvoiceApp.formatCurrency(lineTotal) + "</strong></td>" +
+          "</tr>"
+        );
+      }).join("")
+    : '<tr class="data-table__empty-row"><td colspan="5">No items added yet</td></tr>';
 
   var metaLines = "<strong>" + escapeHtml(businessName) + "</strong>";
   if (format.showBusinessEmail && invoice.business.email) {

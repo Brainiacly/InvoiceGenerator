@@ -11,6 +11,8 @@
   var addItemButton = document.getElementById("add-item-button");
   var templatePicker = document.getElementById("template-slots");
   var logoInput = document.getElementById("business-logo");
+  var showLogoCheckbox = document.getElementById("show-logo");
+  var logoFormatFields = document.getElementById("logo-format-fields");
   var logoPreview = document.getElementById("logo-preview");
   var invoicePreview = document.getElementById("invoice-preview");
   var amountDueLive = document.getElementById("amount-due-live");
@@ -40,7 +42,7 @@
     { input: document.getElementById("customer-name"), message: "Enter a customer name." }
   ];
 
-  /* tax rates */
+  /* ---------- tax rates ---------- */
 
   function buildTaxRateRowMarkup(rateId) {
     return (
@@ -123,7 +125,7 @@
     recalculateAndRender();
   }
 
-  /* item rows */
+  /* ---------- item rows ---------- */
 
   function buildRowMarkup(rowId, taxRateId) {
     return (
@@ -230,7 +232,7 @@
     });
   }
 
-  /* invoice assembly */
+  /* ---------- invoice assembly ---------- */
 
   function buildInvoiceFromForm() {
     var invoice = InvoiceApp.createEmptyInvoice();
@@ -294,7 +296,7 @@
     }
   }
 
-  /* templates */
+  /* ---------- templates ---------- */
 
   function renderTemplatePicker() {
     var markup = InvoiceApp.templates.map(function (template) {
@@ -343,7 +345,7 @@
     }
   }
 
-  /* logo */
+  /* ---------- logo ---------- */
 
   function handleLogoChange() {
     var file = logoInput.files && logoInput.files[0];
@@ -360,10 +362,15 @@
     reader.readAsDataURL(file);
   }
 
-  /* watermark */
+  /* ---------- watermark ---------- */
 
   function handleWatermarkToggle() {
     watermarkFields.hidden = !watermarkEnabled.checked;
+    recalculateAndRender();
+  }
+
+  function handleShowLogoToggle() {
+    logoFormatFields.hidden = !showLogoCheckbox.checked;
     recalculateAndRender();
   }
 
@@ -411,7 +418,7 @@
     recalculateAndRender();
   }
 
-  /* status and validation */
+  /* ---------- status and validation ---------- */
 
   function showStatus(message, type) {
     statusMessage.textContent = message;
@@ -482,6 +489,7 @@
       addTaxRateRow({ label: "Sales tax", rate: 9.5 });
       currentLogoDataUrl = "";
       logoPreview.innerHTML = '<span class="visually-hidden">No logo selected</span>';
+      logoFormatFields.hidden = false;
       currentWatermarkImageDataUrl = "";
       watermarkImagePreview.innerHTML = '<span class="visually-hidden">No watermark image selected</span>';
       watermarkTextField.hidden = false;
@@ -499,7 +507,7 @@
     }, 0);
   }
 
-  /* draft persistence */
+  /* ---------- draft persistence ---------- */
 
   function loadExistingDraft() {
     var draft = InvoiceApp.loadDraft();
@@ -536,6 +544,7 @@
 
     var format = draft.format || {};
     qs("#show-logo").checked = format.showLogo !== false;
+    logoFormatFields.hidden = !qs("#show-logo").checked;
     qs("#show-business-email").checked = format.showBusinessEmail !== false;
     qs("#show-customer-email").checked = format.showCustomerEmail !== false;
     qs("#show-item-descriptions").checked = format.showItemDescriptions !== false;
@@ -613,7 +622,7 @@
     }
   }
 
-  /* init */
+  /* ---------- init ---------- */
 
   function init() {
     renderTemplatePicker();
@@ -661,6 +670,7 @@
     form.addEventListener("reset", handleFormReset);
 
     watermarkEnabled.addEventListener("change", handleWatermarkToggle);
+    showLogoCheckbox.addEventListener("change", handleShowLogoToggle);
     watermarkOpacity.addEventListener("input", handleWatermarkOpacityInput);
     watermarkSize.addEventListener("input", handleWatermarkSizeInput);
     logoSize.addEventListener("input", handleLogoSizeInput);

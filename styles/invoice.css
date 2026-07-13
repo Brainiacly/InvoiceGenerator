@@ -43,20 +43,8 @@
   margin: var(--space-md) 0;
 }
 
-/*
-  The logo sits outside the normal document flow so it can land in any
-  of the four corners of the invoice regardless of what else is on the
-  page at that point. It is positioned relative to .invoice itself, not
-  the header, which is what makes a bottom placement possible.
-*/
-/*
-  A top-positioned logo is a normal child inside the header's start or
-  end group, so it can never overlap the title or invoice number; the
-  header simply makes room for it like any other flex item. A bottom-
-  positioned logo has nothing to naturally flow next to, so it stays
-  absolutely placed against the bottom corners, with invoice__content
-  reserving space below so it doesn't sit on top of the closing note.
-*/
+/* the logo is positioned relative to .invoice so it can sit in any corner */
+/* top logos flow inside the header; bottom logos are absolutely placed */
 .invoice__logo {
   display: inline-flex;
   align-items: center;
@@ -92,11 +80,7 @@
   border-radius: var(--radius-pill);
 }
 
-/*
-  A true circle can't gracefully hold a horizontal line of text the way
-  a pill can, so Circle drops the boxed background here and just shows
-  a round icon with the name next to it, the same as "beside" would.
-*/
+/* a circle can't hold text well, so it drops the boxed background */
 .invoice__logo--shape-circle.invoice__logo--name-inside {
   border: none;
   background: none;
@@ -282,11 +266,7 @@
   margin: var(--space-lg) 0;
 }
 
-/*
-  Invoice design choices. All three reuse the exact same markup from
-  renderInvoiceMarkup(); only the class on the outer .invoice element
-  changes, so there is nothing to keep in sync between styles.
-*/
+/* the three design styles share one markup structure, class only changes */
 
 .invoice--modern {
   box-shadow: var(--shadow-lifted-blue);
@@ -343,4 +323,11 @@
 .invoice--professional .invoice__note {
   font-style: italic;
   color: var(--color-text-muted);
+}
+
+.data-table__empty-row td {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: var(--space-lg);
 }
