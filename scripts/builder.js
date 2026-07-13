@@ -584,7 +584,7 @@
     qs("#watermark-text").value = format.watermarkText || "SAMPLE";
     watermarkOpacity.value = format.watermarkOpacity || 8;
     handleWatermarkOpacityInput();
-    watermarkSize.value = format.watermarkSize || 100;
+    watermarkSize.value = format.watermarkSize || 135;
     handleWatermarkSizeInput();
 
     var savedWatermarkType = format.watermarkType || "text";

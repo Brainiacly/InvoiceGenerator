@@ -96,7 +96,7 @@ InvoiceApp.createEmptyInvoice = function () {
       watermarkText: "SAMPLE",
       watermarkImageDataUrl: "",
       watermarkOpacity: 8,
-      watermarkSize: 100
+      watermarkSize: 135
     }
   };
 };
@@ -263,7 +263,7 @@ function buildWatermarkMarkup(invoice) {
   var opacityStyle = "opacity: " + (opacityPercent / 100) + ";";
 
   if (format.watermarkType === "image") {
-    var watermarkImageSrc = format.watermarkImageDataUrl || invoice.business.logoDataUrl;
+    var watermarkImageSrc = format.watermarkImageDataUrl || invoice.business.logoDataUrl || "assets/logo.png";
     if (!watermarkImageSrc) {
       return "";
     }
