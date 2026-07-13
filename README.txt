@@ -1,6 +1,8 @@
 Brian Phillips  CSC 670
 Invoice Generator – Week 3 Submission
 
+Posted to webpage: https://brainiacly.github.io/InvoiceGenerator/index.html
+
 This is the Week 3 working build for the Invoice Generator project. Open index.html in a browser; the entire application runs from there.
 
 The core pages currently working are Home, Builder, Print Preview, Account and History, Pricing, and About. 

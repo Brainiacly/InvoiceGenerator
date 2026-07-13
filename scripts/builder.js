@@ -40,7 +40,7 @@
     { input: document.getElementById("customer-name"), message: "Enter a customer name." }
   ];
 
-  /* ---------- tax rates ---------- */
+  /* tax rates */
 
   function buildTaxRateRowMarkup(rateId) {
     return (
@@ -123,7 +123,7 @@
     recalculateAndRender();
   }
 
-  /* ---------- item rows ---------- */
+  /* item rows */
 
   function buildRowMarkup(rowId, taxRateId) {
     return (
@@ -230,7 +230,7 @@
     });
   }
 
-  /* ---------- invoice assembly ---------- */
+  /* invoice assembly */
 
   function buildInvoiceFromForm() {
     var invoice = InvoiceApp.createEmptyInvoice();
@@ -294,7 +294,7 @@
     }
   }
 
-  /* ---------- templates ---------- */
+  /* templates */
 
   function renderTemplatePicker() {
     var markup = InvoiceApp.templates.map(function (template) {
@@ -343,7 +343,7 @@
     }
   }
 
-  /* ---------- logo ---------- */
+  /* logo */
 
   function handleLogoChange() {
     var file = logoInput.files && logoInput.files[0];
@@ -360,7 +360,7 @@
     reader.readAsDataURL(file);
   }
 
-  /* ---------- watermark ---------- */
+  /* watermark */
 
   function handleWatermarkToggle() {
     watermarkFields.hidden = !watermarkEnabled.checked;
@@ -411,7 +411,7 @@
     recalculateAndRender();
   }
 
-  /* ---------- status and validation ---------- */
+  /* status and validation */
 
   function showStatus(message, type) {
     statusMessage.textContent = message;
@@ -499,7 +499,7 @@
     }, 0);
   }
 
-  /* ---------- draft persistence ---------- */
+  /* draft persistence */
 
   function loadExistingDraft() {
     var draft = InvoiceApp.loadDraft();
@@ -613,7 +613,7 @@
     }
   }
 
-  /* ---------- init ---------- */
+  /* init */
 
   function init() {
     renderTemplatePicker();
