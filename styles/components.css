@@ -1,0 +1,718 @@
+/* cards */
+
+.card {
+  border: 0.125rem solid transparent;
+  border-radius: var(--radius-large);
+  background-image: var(--gradient-wash), var(--gradient-brand);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: var(--shadow-card);
+  padding: var(--space-lg);
+}
+
+.card__lede {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.card--accent {
+  box-shadow: var(--shadow-card-orange);
+}
+
+.card--emphasis {
+  box-shadow: var(--shadow-lifted);
+}
+
+/*
+  A muted card drops the gradient entirely in favor of a flat grey look,
+  for content that isn't live yet or isn't the highlighted choice, while
+  staying just as readable as any other card.
+*/
+.card--muted {
+  background-image: linear-gradient(135deg, var(--color-surface-muted), white, var(--color-surface-muted)), var(--gradient-muted);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: var(--shadow-subtle);
+  color: var(--color-text-muted);
+}
+
+.card--muted .card__lede,
+.card--muted h3,
+.card--muted h2 {
+  color: var(--color-text-muted);
+}
+
+/*
+  A diagonal "not built yet" hatch pattern for muted cards that represent
+  a specific planned option (like a future pricing tier), rather than
+  every muted card generally. Lives on a pseudo-element so it can sit at
+  a fixed 50% opacity independent of the card's own background gradient.
+*/
+.card--striped {
+  position: relative;
+  overflow: hidden;
+}
+
+.card--striped::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: repeating-linear-gradient(45deg, grey, grey 0.125rem, transparent 0.125rem, transparent 0.75rem);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card--striped > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* buttons */
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.button-row--center {
+  justify-content: center;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius-medium);
+  border: 0.125rem solid transparent;
+  font-weight: 700;
+  font-size: var(--font-size-base);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  box-shadow: var(--shadow-subtle);
+  transition: box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-0.0625rem);
+}
+
+.button:active:not(:disabled) {
+  box-shadow: var(--shadow-pressed);
+  transform: translate(0.125rem, 0.125rem);
+  filter: none;
+}
+
+.button:disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button--primary {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-dark);
+}
+
+.button--primary:hover:not(:disabled) {
+  background-color: var(--color-brand-primary-strong);
+}
+
+.button--secondary {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-heading);
+}
+
+.button--secondary:hover:not(:disabled) {
+  background-color: var(--color-surface-muted);
+  border-color: var(--color-border-strong);
+  filter: none;
+}
+
+.button--ghost {
+  background-color: var(--color-surface);
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
+
+.button--ghost:hover:not(:disabled) {
+  background-color: var(--color-surface-muted);
+  filter: none;
+}
+
+.button--danger {
+  background-color: var(--color-surface);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.button--danger:hover:not(:disabled) {
+  background-color: var(--color-danger-background);
+}
+
+.button--small {
+  font-size: var(--font-size-small);
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+.button--full {
+  width: 100%;
+}
+
+/* badges and pills */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  padding: var(--space-2xs) var(--space-sm);
+  border: 0.0625rem solid transparent;
+}
+
+.badge--selected {
+  background-color: var(--color-surface-tint);
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary-strong);
+}
+
+.badge--planned {
+  background-color: var(--color-surface-muted);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.future-banner {
+  background-image: linear-gradient(120deg, saddlebrown, sienna, firebrick);
+  border-radius: var(--radius-medium);
+  padding: var(--space-sm) var(--space-lg);
+  margin-top: var(--space-lg);
+  text-align: center;
+}
+
+.future-banner__text {
+  color: white;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+.chip-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.chip-list--spread {
+  justify-content: space-between;
+}
+
+.chip {
+  display: inline-block;
+  background-color: var(--color-surface-tint);
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs) var(--space-md);
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--color-text-heading);
+}
+
+/* feature and icon list items */
+
+.icon-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.icon-dot--primary {
+  background-color: var(--color-brand-primary);
+}
+
+.icon-dot--teal {
+  background-color: var(--color-accent-teal);
+}
+
+.icon-dot--green {
+  background-color: var(--color-accent-green);
+}
+
+.icon-dot--purple {
+  background-color: var(--color-accent-purple);
+}
+
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.feature-list__item {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+}
+
+.feature-list__item .icon-dot {
+  margin-top: 0.4em;
+}
+
+.feature-list__desc {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+}
+
+.feature-list--row .feature-list__desc {
+  font-size: 1.625rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+}
+
+.feature-list--row .feature-list__item .icon-dot {
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.5em;
+}
+
+.feature-list--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: var(--space-md) var(--space-xl);
+}
+
+/* form fields */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-md);
+}
+
+.field__label {
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  color: var(--color-text-heading);
+}
+
+.field__hint {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.field__error {
+  font-size: var(--font-size-small);
+  color: var(--color-danger);
+  display: none;
+}
+
+.field.has-error .field__error {
+  display: block;
+}
+
+.field.has-error .field__input {
+  border-color: var(--color-danger);
+}
+
+.field__input,
+.field__select {
+  font: inherit;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-small);
+  border: 0.0625rem solid var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-text-body);
+  width: 100%;
+  transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.field__input:focus-visible,
+.field__select:focus-visible {
+  border-color: var(--color-brand-primary);
+  background-color: var(--color-surface-tint);
+  box-shadow: 0 0 0 0.2rem var(--color-surface-tint);
+}
+
+.field__input--qty {
+  width: 4.5rem;
+}
+
+.field__input--rate {
+  width: 5.5rem;
+}
+
+.field-row {
+  display: grid;
+  gap: var(--space-md);
+}
+
+@media (min-width: 40rem) {
+  .field-row--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .field-row--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-xl);
+}
+
+legend {
+  font-weight: 700;
+  font-size: var(--font-size-medium);
+  color: var(--color-text-heading);
+  padding: 0;
+  margin-bottom: var(--space-2xs);
+  width: 100%;
+}
+
+.legend-lede {
+  font-weight: 400;
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+/* tables */
+
+.data-table {
+  width: 100%;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: var(--space-sm);
+  font-size: var(--font-size-small);
+  border-bottom: 0.0625rem solid var(--color-divider);
+}
+
+.data-table thead th {
+  background-color: var(--color-surface-tint);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.7rem;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.data-table td.is-numeric,
+.data-table th.is-numeric {
+  text-align: right;
+}
+
+.data-table__remove {
+  background: none;
+  border: 0;
+  color: var(--color-danger);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  padding: var(--space-2xs) var(--space-xs);
+}
+
+.data-table__field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+  Below this width, six columns of inputs in one table row stop being
+  readable no matter how the space is divided, so each item becomes its
+  own labeled card instead. The field labels (hidden in the table view
+  because the column headers already say what they are) become real
+  visible text here, since the column headers are gone.
+*/
+/*
+  The items table is always laid out as one labeled card per row rather
+  than a traditional multi-column table. A compact table needs roughly
+  820px of its own width to stay readable, but once the page is wide
+  enough to show the two-column builder layout, the table's column only
+  gets about 55-60% of the viewport - which stays below that safe width
+  all the way from a 1024px tablet up through common 1366px and 1440px
+  laptop screens. Rather than a breakpoint that quietly breaks again on
+  ordinary laptops, the readable layout is just the layout, always.
+*/
+#items-table thead {
+  display: none;
+}
+
+#items-table,
+#items-table tbody,
+#items-table tr,
+#items-table td {
+  display: block;
+  width: 100%;
+}
+
+#items-table {
+  border: none;
+}
+
+#items-table tr {
+  border: 0.125rem solid var(--color-border-accent-green);
+  border-radius: var(--radius-medium);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+#items-table td {
+  border-bottom: none;
+  padding: var(--space-xs) 0;
+  text-align: left;
+}
+
+#items-table .field__input--qty,
+#items-table .field__input--rate {
+  width: 100%;
+}
+
+#items-table .data-table__field-label {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0 0 var(--space-2xs);
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  display: block;
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+/* status text used inside the totals summary */
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+}
+
+.totals__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.totals__row--final {
+  font-size: var(--font-size-medium);
+  font-weight: 700;
+  color: var(--color-text-heading);
+  border-top: 0.0625rem solid var(--color-divider);
+  padding-top: var(--space-sm);
+  margin-top: var(--space-2xs);
+}
+
+/* a set of native radio inputs styled as a segmented control, reused for
+   invoice design, logo position, and spacing density */
+
+.option-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.option-picker__choice {
+  position: relative;
+  cursor: pointer;
+}
+
+.option-picker__choice input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.option-picker__choice span {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  border: 0.125rem solid var(--color-border);
+  border-radius: var(--radius-medium);
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  color: var(--color-text-heading);
+  transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.option-picker__choice:hover span {
+  border-color: var(--color-border-strong);
+}
+
+.option-picker__choice input:checked + span {
+  border-color: var(--color-brand-primary);
+  background-color: var(--color-surface-tint);
+  color: var(--color-brand-primary-strong);
+}
+
+.option-picker__choice input:focus-visible + span {
+  outline: 0.2rem solid var(--color-focus-ring);
+  outline-offset: 0.2rem;
+}
+
+/* checkbox toggles used throughout the Formatting section */
+
+.toggle-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.toggle-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.toggle-row input {
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.toggle-row__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle-row__label {
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  color: var(--color-text-heading);
+}
+
+.toggle-row__hint {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.format-group {
+  margin-bottom: var(--space-lg);
+}
+
+.format-group__label {
+  display: block;
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-sm);
+}
+
+/* watermark opacity slider */
+
+.opacity-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: 24rem;
+}
+
+.opacity-control input[type="range"] {
+  flex: 1;
+  accent-color: var(--color-brand-primary);
+}
+
+.opacity-control__value {
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  color: var(--color-text-heading);
+  min-width: 3rem;
+  text-align: right;
+}
+
+/* step indicator used on the builder page */
+
+.step-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+@media (min-width: 30rem) {
+  .step-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 48rem) {
+  .step-list {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.step-list__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  justify-content: center;
+  border: 0.125rem solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-sm);
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  transition: border-color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.step-list__link:hover {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-surface-tint);
+}
+
+.step-list__number {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}

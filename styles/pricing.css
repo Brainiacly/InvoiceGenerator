@@ -1,0 +1,72 @@
+.pricing-grid {
+  display: grid;
+  gap: var(--space-lg);
+  align-items: stretch;
+}
+
+@media (min-width: 56rem) {
+  .pricing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pricing-card.is-selected {
+  border-width: 0.1875rem;
+  box-shadow: var(--shadow-lifted-orange);
+}
+
+/*
+  The two not-yet-available tiers get a faint diagonal hatch on top of
+  the muted gradient, reinforcing "not here yet" without needing extra
+  wording. Light grey lines against transparent gaps read as a soft,
+  half-strength pattern while staying within named CSS colors.
+*/
+.pricing-card.card--muted {
+  background-image:
+    repeating-linear-gradient(45deg, lightgray 0, lightgray 0.0625rem, transparent 0.0625rem, transparent 0.75rem),
+    linear-gradient(135deg, var(--color-surface-muted), white, var(--color-surface-muted)),
+    var(--gradient-muted);
+  background-origin: border-box;
+  background-clip: padding-box, padding-box, border-box;
+}
+
+.pricing-card__price {
+  font-size: var(--font-size-xlarge);
+  font-weight: 700;
+  color: var(--color-text-heading);
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.pricing-card.is-selected .pricing-card__price {
+  color: var(--color-brand-primary-strong);
+}
+
+.pricing-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  flex-grow: 1;
+}
+
+.pricing-card__features li {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: flex-start;
+  font-size: var(--font-size-small);
+}
+
+.pricing-tagline {
+  margin-top: var(--space-lg);
+  margin-bottom: 0;
+  font-weight: 700;
+  font-size: var(--font-size-medium);
+  color: var(--color-brand-primary-strong);
+}

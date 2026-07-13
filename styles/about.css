@@ -1,0 +1,93 @@
+.roadmap {
+  list-style: none;
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 56rem) {
+  .roadmap {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.roadmap__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.roadmap__number {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--color-step-badge);
+  color: var(--color-text-on-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--font-size-small);
+}
+
+.roadmap__title {
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+.roadmap__desc {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+}
+
+.tech-chip-list {
+  margin-top: var(--space-md);
+}
+
+.about-logo {
+  display: block;
+  max-width: 16rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-md);
+}
+
+.about-logo--in-card {
+  max-width: 7rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.faq-grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 56rem) {
+  .faq-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.faq-item dt {
+  font-weight: 700;
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-2xs);
+}
+
+.faq-item dd {
+  margin: 0 0 var(--space-md);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+}
+
+.info-card--fill {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.info-card--fill p {
+  font-size: var(--font-size-medium);
+}

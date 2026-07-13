@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+  <title>About | Invoice Generator</title>
+  <meta name="description" content="What Invoice Generator does, who it helps, and how this class project is organized.">
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/about.css">
+  <link rel="stylesheet" href="styles/print.css" media="print">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a class="site-header__brand" href="index.html"><img src="assets/logo-icon.png" alt="" class="site-header__brand-icon">About Us</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="visually-hidden">Menu</span>
+        <span class="nav-toggle__icon" aria-hidden="true"></span>
+      </button>
+      <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+        <ul class="primary-nav__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="builder.html">Builder</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="about.html" aria-current="page">About</a></li>
+          <li class="primary-nav__divider" aria-hidden="true"></li>
+          <li><a href="sign-in.html">Sign in</a></li>
+          <li><a href="sign-up.html" class="primary-nav__signup">Sign up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <div class="container">
+      
+      <section class="page-section" aria-labelledby="info-heading">
+        <h2 class="visually-hidden" id="info-heading">Project details</h2>
+        <div class="grid grid--3">
+          <div class="card info-card--fill">
+            <h3>What the service does</h3>
+            <p>Invoice Generator helps users create professional invoices without starting from a blank template. It supports labor, materials, fees, tax, discounts, print preview, and saved PDF copies.</p>
+          </div>
+          <div class="card info-card--fill">
+            <h3>Who it helps</h3>
+            <p>Contractors, freelancers, mobile repair workers, cleaners, tutors, landscapers, and small businesses that need quick, customer-ready invoices.</p>
+          </div>
+          <div class="card">
+            <img src="assets/logo-full.png" alt="Invoice Generator" class="about-logo about-logo--in-card">
+            <h3>Contact information</h3>
+            <p>Brian Phillips<br>
+            <a href="mailto:b.phillips958@student.nu.edu">b.phillips958@student.nu.edu</a><br>
+            Cerritos, CA</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="roadmap-heading">
+        <div class="card">
+          <h2 id="roadmap-heading" class="u-text-center">Project roadmap</h2>
+          <p class="card__lede u-text-center">This build is Module 3 of a four-part course project.</p>
+          <ol class="roadmap">
+            <li class="roadmap__item">
+              <span class="roadmap__number" aria-hidden="true">1</span>
+              <h3 class="roadmap__title">Plan</h3>
+              <p class="roadmap__desc">Define the project, audience, and key features.</p>
+            </li>
+            <li class="roadmap__item">
+              <span class="roadmap__number" aria-hidden="true">2</span>
+              <h3 class="roadmap__title">Design</h3>
+              <p class="roadmap__desc">Build the wireframe and visual prototype.</p>
+            </li>
+            <li class="roadmap__item is-current">
+              <span class="roadmap__number" aria-hidden="true">3</span>
+              <h3 class="roadmap__title">Build</h3>
+              <p class="roadmap__desc">Implement the site with HTML, CSS, and JavaScript &mdash; this step.</p>
+            </li>
+            <li class="roadmap__item">
+              <span class="roadmap__number" aria-hidden="true">4</span>
+              <h3 class="roadmap__title">Publish</h3>
+              <p class="roadmap__desc">Deploy the finished site so it is live on the web.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="faq-heading">
+        <div class="card">
+          <h2 id="faq-heading" class="u-text-center">Common questions</h2>
+          <dl class="faq-grid">
+            <div class="faq-item">
+              <dt>What is this?</dt>
+              <dd>Invoice Generator is a free tool for creating professional invoices without starting from a blank page. Add business and customer details, list what you're billing for, and get a print- or email-ready invoice.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>Who built it?</dt>
+              <dd>Brian Phillips, as a CSC 670 course project.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>Why?</dt>
+              <dd>Contractors and freelancers often don't have a fast, no-fuss way to put together a clean invoice on the spot. This project is focused on getting that one thing right.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>Can I switch plans later?</dt>
+              <dd>Yes. Professional and Business become available to switch into as soon as they launch.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>Is Basic really free?</dt>
+              <dd>Yes. Creating, printing, and saving invoices costs nothing on the Basic plan.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>What happens to my invoices?</dt>
+              <dd>They stay yours. Nothing is watermarked or locked behind a future paywall.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>When will the future updates happen?</dt>
+              <dd>There's no fixed date yet. Saved history, customers, and export tools are planned as the project continues past this course module.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>Is this maintained and kept up to date?</dt>
+              <dd>It's actively being built as part of an ongoing course project. The Basic plan is the stable, working version; anything marked Planned or Future isn't live yet.</dd>
+            </div>
+            <div class="faq-item">
+              <dt>Is my information safe?</dt>
+              <dd>Everything you type, including your logo and watermark image, stays in your browser on your own device. Nothing is uploaded to a server.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="tech-heading">
+        <div class="card">
+          <h2 id="tech-heading" class="u-text-center">Built with</h2>
+          <p class="u-text-center">This version is a front-end project: HTML for structure, CSS for layout and style, and JavaScript for the live calculations.</p>
+          <ul class="chip-list chip-list--spread tech-chip-list">
+            <li class="chip">HTML</li>
+            <li class="chip">CSS</li>
+            <li class="chip">JavaScript</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="about-cta-heading">
+        <h2 class="visually-hidden" id="about-cta-heading">Get started</h2>
+        <div class="button-row button-row--center">
+          <a class="button button--primary" href="builder.html">Build an invoice</a>
+          <a class="button button--secondary" href="pricing.html">See pricing</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul class="site-footer__list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="builder.html">Builder</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__copyright">&copy; 2026 Invoice Generator. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts/common.js" defer></script>
+</body>
+</html>

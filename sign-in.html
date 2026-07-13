@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+  <title>Sign in | Invoice Generator</title>
+  <meta name="description" content="Sign in to Invoice Generator.">
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/auth.css">
+  <link rel="stylesheet" href="styles/print.css" media="print">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a class="site-header__brand" href="index.html"><img src="assets/logo-icon.png" alt="" class="site-header__brand-icon">Sign In</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="visually-hidden">Menu</span>
+        <span class="nav-toggle__icon" aria-hidden="true"></span>
+      </button>
+      <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+        <ul class="primary-nav__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="builder.html">Builder</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="primary-nav__divider" aria-hidden="true"></li>
+          <li><a href="sign-in.html" aria-current="page">Sign in</a></li>
+          <li><a href="sign-up.html" class="primary-nav__signup">Sign up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <div class="container">
+      <div class="future-banner">
+        <p class="future-banner__text">Future update &mdash; accounts aren't live yet</p>
+      </div>
+      <div class="auth-layout">
+        <div class="card auth-card">
+          <h1 class="u-text-center">Sign in</h1>
+          <p class="auth-card__lede u-text-center">Welcome back. Enter your details to continue.</p>
+
+          <form id="sign-in-form" novalidate>
+            <div class="field">
+              <label class="field__label" for="signin-email">Email</label>
+              <input class="field__input" type="email" id="signin-email" name="email" placeholder="you@example.com" required aria-describedby="signin-email-error" aria-invalid="false">
+              <p class="field__error" id="signin-email-error">Enter a valid email address.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="signin-password">Password</label>
+              <input class="field__input" type="password" id="signin-password" name="password" required aria-describedby="signin-password-hint signin-password-error" aria-invalid="false">
+              <span class="field__hint password-requirements" id="signin-password-hint">At least 8 characters, with one uppercase letter, one lowercase letter, one number, and one symbol.</span>
+              <p class="field__error" id="signin-password-error">That password doesn't meet the requirements above.</p>
+            </div>
+
+            <button type="submit" class="button button--primary button--full">Sign in</button>
+          </form>
+
+          <p class="auth-switch u-text-center">Don't have an account? <a href="sign-up.html">Sign up</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul class="site-footer__list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="builder.html">Builder</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__copyright">&copy; 2026 Invoice Generator. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts/common.js" defer></script>
+  <script src="scripts/auth.js" defer></script>
+</body>
+</html>

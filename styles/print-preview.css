@@ -1,0 +1,21 @@
+.print-layout {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .print-layout {
+    grid-template-columns: 1fr 1.6fr;
+  }
+}
+
+.print-tools .button {
+  margin-bottom: var(--space-sm);
+}
+
+#invoice-print-area {
+  background-color: var(--color-surface-tint);
+  border-radius: var(--radius-large);
+  padding: var(--space-lg);
+}

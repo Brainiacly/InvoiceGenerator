@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+  <title>Invoice Generator | Invoices without the mess</title>
+  <meta name="description" content="Create professional invoices for labor, materials, and fees in minutes, then print, save, or email them with no watermarks.">
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/home.css">
+  <link rel="stylesheet" href="styles/print.css" media="print">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a class="site-header__brand" href="index.html"><img src="assets/logo-icon.png" alt="" class="site-header__brand-icon">Invoice Generator</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="visually-hidden">Menu</span>
+        <span class="nav-toggle__icon" aria-hidden="true"></span>
+      </button>
+      <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+        <ul class="primary-nav__list">
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="builder.html">Builder</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="primary-nav__divider" aria-hidden="true"></li>
+          <li><a href="sign-in.html">Sign in</a></li>
+          <li><a href="sign-up.html" class="primary-nav__signup">Sign up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <div class="container">
+
+      <section class="page-section">
+        <div class="hero">
+          <div class="card card--accent hero__primary">
+            <h1>Invoices without the mess</h1>
+            <p>No watermarks. Save your invoices, then print or email them in minutes.</p>
+            <div class="hero__actions">
+              <a class="button button--primary" href="builder.html">Build an invoice</a>
+              <a class="button button--secondary" href="pricing.html">View pricing</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>Simple workflow</h2>
+            <ol class="workflow-list">
+              <li class="workflow-list__item">
+                <span class="workflow-list__number" aria-hidden="true">1</span>
+                <p>Add business and customer details</p>
+              </li>
+              <li class="workflow-list__item">
+                <span class="workflow-list__number" aria-hidden="true">2</span>
+                <p>Add labor, materials, and fees</p>
+              </li>
+              <li class="workflow-list__item">
+                <span class="workflow-list__number" aria-hidden="true">3</span>
+                <p>Review totals in the live preview</p>
+              </li>
+              <li class="workflow-list__item">
+                <span class="workflow-list__number" aria-hidden="true">4</span>
+                <p>Print, save, or email the invoice</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="features-heading">
+        <h2 class="visually-hidden" id="features-heading">Why use Invoice Generator</h2>
+        <div class="grid grid--3">
+          <div class="card">
+            <h3>No watermarks</h3>
+            <p>Finished invoices look professional and belong to your business.</p>
+          </div>
+          <div class="card">
+            <h3>Flexible charges</h3>
+            <p>Labor, materials, fees, discounts, tax, and balance due &mdash; including a second tax rate for jobs that span two counties.</p>
+          </div>
+          <div class="card">
+            <h3>Save and send</h3>
+            <p>Print, save as PDF, or prepare an email draft.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="cta-heading">
+        <div class="card card--accent cta-banner">
+          <div class="cta-banner__text">
+            <h2 id="cta-heading">Built for contractors, freelancers, and service workers</h2>
+            <p>Use one clear page to enter job details, separate taxable and non-taxable items, review totals, then produce a customer-ready invoice.</p>
+          </div>
+          <div class="cta-banner__actions">
+            <a class="button button--primary" href="builder.html">Build an invoice</a>
+            <a class="button button--secondary" href="about.html">About us</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-section" aria-labelledby="billfor-heading">
+        <div class="card">
+          <h2 id="billfor-heading" class="u-text-center">What you can bill for</h2>
+          <ul class="chip-list chip-list--spread">
+            <li class="chip">Labor</li>
+            <li class="chip">Materials</li>
+            <li class="chip">Parts</li>
+            <li class="chip">Delivery</li>
+            <li class="chip">Service fees</li>
+            <li class="chip">Discounts</li>
+            <li class="chip">Tax</li>
+            <li class="chip">Deposits</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul class="site-footer__list">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="builder.html">Builder</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__copyright">&copy; 2026 Invoice Generator. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts/common.js" defer></script>
+</body>
+</html>

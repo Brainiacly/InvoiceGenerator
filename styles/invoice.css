@@ -1,0 +1,346 @@
+.invoice {
+  position: relative;
+  background-color: var(--color-surface);
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-card-blue);
+  padding: var(--space-xl);
+}
+
+.invoice__content {
+  position: relative;
+  z-index: 1;
+}
+
+.invoice__content--reserve-bottom {
+  padding-bottom: 5rem;
+}
+
+.invoice__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.invoice__header-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.invoice__title {
+  margin: 0;
+  font-size: var(--font-size-large);
+  letter-spacing: 0.03em;
+}
+
+.invoice__rule {
+  border: none;
+  border-top: 0.0625rem solid var(--color-divider);
+  margin: var(--space-md) 0;
+}
+
+/*
+  The logo sits outside the normal document flow so it can land in any
+  of the four corners of the invoice regardless of what else is on the
+  page at that point. It is positioned relative to .invoice itself, not
+  the header, which is what makes a bottom placement possible.
+*/
+/*
+  A top-positioned logo is a normal child inside the header's start or
+  end group, so it can never overlap the title or invoice number; the
+  header simply makes room for it like any other flex item. A bottom-
+  positioned logo has nothing to naturally flow next to, so it stays
+  absolutely placed against the bottom corners, with invoice__content
+  reserving space below so it doesn't sit on top of the closing note.
+*/
+.invoice__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: calc(0.7rem * var(--logo-scale, 1));
+  font-weight: 700;
+  color: var(--color-brand-primary-strong);
+}
+
+.invoice__logo--name-inside {
+  border: 0.0625rem solid var(--color-brand-primary);
+  background-color: var(--color-surface-tint);
+  padding: var(--space-2xs) var(--space-sm);
+  max-width: 12.86em;
+}
+
+.invoice__logo--name-beside,
+.invoice__logo--name-hidden {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.invoice__logo--shape-square.invoice__logo--name-inside {
+  border-radius: var(--radius-small);
+}
+
+.invoice__logo--shape-rounded.invoice__logo--name-inside {
+  border-radius: var(--radius-medium);
+}
+
+.invoice__logo--shape-ellipse.invoice__logo--name-inside {
+  border-radius: var(--radius-pill);
+}
+
+/*
+  A true circle can't gracefully hold a horizontal line of text the way
+  a pill can, so Circle drops the boxed background here and just shows
+  a round icon with the name next to it, the same as "beside" would.
+*/
+.invoice__logo--shape-circle.invoice__logo--name-inside {
+  border: none;
+  background: none;
+  padding: 0;
+  max-width: 12.86em;
+}
+
+.invoice__logo-text {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.invoice__logo--name-hidden .invoice__logo-text {
+  display: none;
+}
+
+.invoice__logo--bottom-left,
+.invoice__logo--bottom-right {
+  position: absolute;
+  z-index: 2;
+}
+
+.invoice__logo--bottom-left {
+  bottom: var(--space-lg);
+  left: var(--space-lg);
+}
+
+.invoice__logo--bottom-right {
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+}
+
+.invoice__logo img,
+.invoice__logo-mark {
+  width: 2.143em;
+  height: 2.143em;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.invoice__logo-mark {
+  background-color: var(--color-brand-primary);
+}
+
+.invoice__logo--shape-square img,
+.invoice__logo--shape-square .invoice__logo-mark {
+  border-radius: 0;
+}
+
+.invoice__logo--shape-rounded img,
+.invoice__logo--shape-rounded .invoice__logo-mark {
+  border-radius: var(--radius-small);
+}
+
+.invoice__logo--shape-circle img,
+.invoice__logo--shape-circle .invoice__logo-mark {
+  border-radius: 50%;
+}
+
+.invoice__logo--shape-ellipse img,
+.invoice__logo--shape-ellipse .invoice__logo-mark {
+  border-radius: 50%;
+  width: 2.857em;
+  height: 2em;
+}
+
+.invoice__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-small);
+}
+
+.invoice__meta strong {
+  color: var(--color-text-heading);
+}
+
+.invoice__meta span {
+  color: var(--color-text-muted);
+}
+
+.invoice__number {
+  font-weight: 700;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.invoice__table-scroll {
+  overflow-x: auto;
+  margin-block: var(--space-md);
+  -webkit-overflow-scrolling: touch;
+}
+
+.invoice table {
+  margin-block: 0;
+  min-width: 26rem;
+}
+
+.invoice table th {
+  font-size: 0.7rem;
+}
+
+.invoice table td strong {
+  display: block;
+}
+
+.invoice table td small {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.invoice__note {
+  color: var(--color-brand-primary-strong);
+  font-weight: 700;
+  font-size: var(--font-size-small);
+  margin-top: var(--space-md);
+  margin-bottom: 0;
+}
+
+.invoice__watermark {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+}
+
+.invoice__watermark--text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-text-heading);
+  transform: rotate(-28deg) scale(var(--watermark-scale, 1));
+  white-space: nowrap;
+}
+
+.invoice__watermark--image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12%;
+  box-sizing: border-box;
+  transform: scale(var(--watermark-scale, 1));
+}
+
+.invoice--empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-2xl);
+}
+
+/* spacing density, adjustable from the Builder's Formatting section */
+
+.invoice--spacing-compact {
+  padding: var(--space-md);
+}
+
+.invoice--spacing-compact .invoice__header,
+.invoice--spacing-compact .invoice__meta {
+  margin-bottom: var(--space-xs);
+}
+
+.invoice--spacing-compact .invoice__rule {
+  margin: var(--space-xs) 0;
+}
+
+.invoice--spacing-spacious {
+  padding: var(--space-2xl);
+}
+
+.invoice--spacing-spacious .invoice__header,
+.invoice--spacing-spacious .invoice__meta {
+  margin-bottom: var(--space-lg);
+}
+
+.invoice--spacing-spacious .invoice__rule {
+  margin: var(--space-lg) 0;
+}
+
+/*
+  Invoice design choices. All three reuse the exact same markup from
+  renderInvoiceMarkup(); only the class on the outer .invoice element
+  changes, so there is nothing to keep in sync between styles.
+*/
+
+.invoice--modern {
+  box-shadow: var(--shadow-lifted-blue);
+}
+
+.invoice--modern .invoice__header {
+  background-image: linear-gradient(to right, var(--color-nav-gradient-start), var(--color-nav-gradient-end));
+  color: var(--color-text-on-dark);
+  margin: calc(var(--space-xl) * -1) calc(var(--space-xl) * -1) var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
+}
+
+.invoice--modern.invoice--spacing-compact .invoice__header {
+  margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.invoice--modern.invoice--spacing-spacious .invoice__header {
+  margin: calc(var(--space-2xl) * -1) calc(var(--space-2xl) * -1) var(--space-lg);
+  padding: var(--space-lg) var(--space-2xl);
+}
+
+.invoice--modern .invoice__number {
+  color: inherit;
+  opacity: 0.85;
+}
+
+.invoice--modern .totals__row--final {
+  border-top-width: 0.1875rem;
+  border-top-color: var(--color-brand-primary);
+}
+
+.invoice--professional {
+  font-family: var(--font-family-serif);
+}
+
+.invoice--professional .invoice__title {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 400;
+}
+
+.invoice--professional .invoice__header {
+  border-bottom: 0.1875rem double var(--color-text-heading);
+  padding-bottom: var(--space-md);
+}
+
+.invoice--professional .totals {
+  border: 0.0625rem solid var(--color-divider);
+  border-radius: var(--radius-small);
+  padding: var(--space-md);
+}
+
+.invoice--professional .invoice__note {
+  font-style: italic;
+  color: var(--color-text-muted);
+}

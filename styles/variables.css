@@ -1,0 +1,121 @@
+/*
+  Design tokens for the Invoice Generator site.
+  Every color value below is a CSS named color on purpose, per project
+  requirements. Nothing else in the CSS should hardcode a color directly;
+  it should reach for one of these variables instead.
+*/
+
+:root {
+  /* surfaces */
+  --color-page-background: white;
+  --gradient-page-background: linear-gradient(135deg, aliceblue, honeydew, cornsilk, lightyellow);
+  --color-surface: white;
+  --color-surface-tint: aliceblue;
+  --color-surface-muted: whitesmoke;
+
+  /* borders and dividers */
+  --color-border: lightsteelblue;
+  --color-border-strong: cornflowerblue;
+  --color-divider: gainsboro;
+
+  /* text */
+  --color-text-heading: black;
+  --color-text-body: darkslategray;
+  --color-text-muted: dimgray;
+  --color-text-on-dark: white;
+  --color-text-link: mediumblue;
+
+  /* brand */
+  --color-brand-primary: royalblue;
+  --color-brand-primary-strong: mediumblue;
+  --color-brand-primary-dark: navy;
+  --color-brand-primary-darkest: midnightblue;
+
+  /* accents, one per feature area so meaning stays consistent site-wide */
+  --color-accent-teal: teal;
+  --color-accent-green: seagreen;
+  --color-accent-purple: slateblue;
+
+  /* status */
+  --color-success-background: honeydew;
+  --color-success-text: darkgreen;
+  --color-danger: crimson;
+  --color-danger-background: seashell;
+
+  /* chrome */
+  --color-nav-gradient-start: midnightblue;
+  --color-nav-gradient-end: royalblue;
+  --color-footer-background: midnightblue;
+
+  /* accessibility */
+  --color-focus-ring: orangered;
+
+  /* elevation: two-tone offset shadows (light top-left, dark bottom-right)
+     used as this site's signature card treatment, scaled by importance.
+     Neutral is the default; blue marks the invoice document specifically,
+     orange marks calls to action, so the color itself carries meaning
+     instead of every shadow being identical. */
+  --color-shadow-light: grey;
+  --color-shadow-dark: black;
+  --color-shadow-blue-light: powderblue;
+  --color-shadow-blue-dark: navy;
+  --color-shadow-orange-light: navajowhite;
+  --color-shadow-orange-dark: saddlebrown;
+
+  --shadow-subtle: -3px -3px 2px var(--color-shadow-light), 6px 6px 2px var(--color-shadow-dark);
+  --shadow-card: -5px -5px 3px var(--color-shadow-light), 10px 10px 3px var(--color-shadow-dark);
+  --shadow-lifted: -6px -6px 4px var(--color-shadow-light), 14px 14px 4px var(--color-shadow-dark);
+  --shadow-pressed: -1px -1px 1px var(--color-shadow-light), 2px 2px 1px var(--color-shadow-dark);
+
+  --shadow-card-blue: -5px -5px 3px var(--color-shadow-blue-light), 10px 10px 3px var(--color-shadow-blue-dark);
+  --shadow-lifted-blue: -6px -6px 4px var(--color-shadow-blue-light), 14px 14px 4px var(--color-shadow-blue-dark);
+  --shadow-card-orange: -5px -5px 3px var(--color-shadow-orange-light), 10px 10px 3px var(--color-shadow-orange-dark);
+  --shadow-lifted-orange: -6px -6px 4px var(--color-shadow-orange-light), 14px 14px 4px var(--color-shadow-orange-dark);
+
+  --color-border-accent-green: seagreen;
+
+  /* shared 4-color brand gradient, used for every card's border and
+     background wash so the whole site reads as one consistent palette
+     instead of a different treatment per page. Reuses the same four
+     accent colors already used elsewhere (brand blue, teal, purple,
+     and the orange accent), not new ones. */
+  --gradient-brand: linear-gradient(120deg, royalblue, teal, slateblue, sienna);
+  --gradient-wash: linear-gradient(135deg, white, aliceblue, white, aliceblue);
+  --gradient-muted: linear-gradient(120deg, silver, gainsboro, silver, darkgray);
+
+  /* the one color every numbered circle/badge uses site-wide (workflow
+     steps, roadmap steps), so "step 2" doesn't quietly mean something
+     different depending on which page it's on */
+  --color-step-badge: royalblue;
+
+  /* type */
+  --font-family-base: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-serif: Cambria, "Times New Roman", Georgia, Times, serif;
+  --font-size-small: 0.8125rem;
+  --font-size-base: 1rem;
+  --font-size-medium: 1.125rem;
+  --font-size-large: 1.5rem;
+  --font-size-xlarge: 2rem;
+  --font-size-display: 2.5rem;
+  --line-height-base: 1.55;
+  --line-height-tight: 1.25;
+
+  /* spacing scale, used instead of one-off pixel values */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* shape */
+  --radius-small: 0.5rem;
+  --radius-medium: 0.75rem;
+  --radius-large: 1.125rem;
+  --radius-pill: 999px;
+
+  /* layout */
+  --content-max-width: 74rem;
+  --header-height: 3.5rem;
+}

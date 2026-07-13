@@ -1,0 +1,44 @@
+@media print {
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background-color: var(--color-page-background);
+    background-image: none;
+    display: block;
+  }
+
+  .page-main {
+    min-height: 0;
+  }
+
+  .container {
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  .print-layout,
+  .builder-layout {
+    display: block;
+  }
+
+  #invoice-print-area {
+    background-color: var(--color-page-background);
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .invoice {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  @page {
+    margin: 0.6in;
+  }
+}

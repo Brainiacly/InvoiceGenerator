@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+  <title>Invoice Builder | Invoice Generator</title>
+  <meta name="description" content="Enter business and customer details, add labor and material charges, and watch the invoice total update live.">
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/invoice.css">
+  <link rel="stylesheet" href="styles/builder.css">
+  <link rel="stylesheet" href="styles/print.css" media="print">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="site-header__bar">
+      <a class="site-header__brand" href="index.html"><img src="assets/logo-icon.png" alt="" class="site-header__brand-icon">Invoice Builder</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation">
+        <span class="visually-hidden">Menu</span>
+        <span class="nav-toggle__icon" aria-hidden="true"></span>
+      </button>
+      <nav class="primary-nav" id="primary-navigation" aria-label="Primary">
+        <ul class="primary-nav__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="builder.html" aria-current="page">Builder</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="primary-nav__divider" aria-hidden="true"></li>
+          <li><a href="sign-in.html">Sign in</a></li>
+          <li><a href="sign-up.html" class="primary-nav__signup">Sign up</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <div class="container">
+      
+      <section class="page-section no-print" aria-labelledby="templates-heading">
+        <div class="card">
+          <h2 id="templates-heading" class="u-text-center">Start from a template</h2>
+          <p class="card__lede u-text-center">Pick one to fill in the items for you, or skip ahead and build from scratch.</p>
+          <div class="grid grid--4" id="template-slots">
+            <!-- Cards are added by scripts/builder.js -->
+          </div>
+        </div>
+      </section>
+
+      
+
+      <nav aria-label="Builder sections" class="no-print">
+        <ul class="step-list">
+          <li><a class="step-list__link" href="#section-business"><span class="step-list__number" aria-hidden="true">1</span> Business</a></li>
+          <li><a class="step-list__link" href="#section-customer"><span class="step-list__number" aria-hidden="true">2</span> Customer</a></li>
+          <li><a class="step-list__link" href="#section-items"><span class="step-list__number" aria-hidden="true">3</span> Items</a></li>
+          <li><a class="step-list__link" href="#section-design"><span class="step-list__number" aria-hidden="true">4</span> Design</a></li>
+          <li><a class="step-list__link" href="#section-formatting"><span class="step-list__number" aria-hidden="true">5</span> Formatting</a></li>
+          <li><a class="step-list__link" href="#invoice-preview-heading"><span class="step-list__number" aria-hidden="true">6</span> Preview</a></li>
+        </ul>
+      </nav>
+
+      <div class="builder-layout">
+        <div class="builder-layout__form no-print">
+          <form id="invoice-form" novalidate>
+
+            <section id="section-business" aria-labelledby="section-business-heading">
+              <h2 class="visually-hidden" id="section-business-heading">Business</h2>
+              <fieldset>
+                <legend>Business<span class="legend-lede"></span></legend>
+
+                <div class="logo-picker">
+                  <span class="logo-picker__preview" id="logo-preview">
+                    <span class="visually-hidden">No logo selected</span>
+                  </span>
+                  <div class="field logo-picker__field">
+                    <label class="field__label" for="business-logo">Business logo (optional)</label>
+                    <input class="field__input" type="file" id="business-logo" name="businessLogo" accept="image/*">
+                    <span class="field__hint">PNG or JPG works best. This stays on your device.</span>
+                  </div>
+                </div>
+
+                <div class="field-row field-row--3">
+                  <div class="field" id="business-name-field">
+                    <label class="field__label" for="business-name">Business name</label>
+                    <input class="field__input" type="text" id="business-name" name="businessName" placeholder="Sample Contractor Co." required aria-describedby="business-name-error" aria-invalid="false">
+                    <p class="field__error" id="business-name-error">Enter a business name.</p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="business-email">Business email</label>
+                    <input class="field__input" type="email" id="business-email" name="businessEmail" placeholder="hello@sampleinvoice.com">
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="invoice-number">Invoice number</label>
+                    <input class="field__input" type="text" id="invoice-number" name="invoiceNumber">
+                  </div>
+                </div>
+              </fieldset>
+            </section>
+
+            <section id="section-customer" aria-labelledby="section-customer-heading">
+              <h2 class="visually-hidden" id="section-customer-heading">Customer</h2>
+              <fieldset>
+                <legend>Customer<span class="legend-lede">Who the invoice goes to.</span></legend>
+                <div class="field-row field-row--2">
+                  <div class="field" id="customer-name-field">
+                    <label class="field__label" for="customer-name">Customer name</label>
+                    <input class="field__input" type="text" id="customer-name" name="customerName" placeholder="Jordan Lee" required aria-describedby="customer-name-error" aria-invalid="false">
+                    <p class="field__error" id="customer-name-error">Enter a customer name.</p>
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="customer-email">Customer email</label>
+                    <input class="field__input" type="email" id="customer-email" name="customerEmail" placeholder="jordan@example.com">
+                  </div>
+                </div>
+              </fieldset>
+            </section>
+
+            <section id="section-items" aria-labelledby="section-items-heading">
+              <h2 class="visually-hidden" id="section-items-heading">Items</h2>
+              <fieldset>
+                <legend>Tax rates<span class="legend-lede">Name and set as many tax rates as this job needs. Each item picks one from its own dropdown.</span></legend>
+
+                <div id="tax-rates-list">
+                  <!-- Rows are added by scripts/builder.js -->
+                </div>
+
+                <button type="button" class="button button--ghost button--small u-mt-md" id="add-tax-rate-button">
+                  + Add tax rate
+                </button>
+              </fieldset>
+
+              <fieldset>
+                <legend>Items<span class="legend-lede">Add invoice rows and assign a tax rate to each one, or none.</span></legend>
+
+                <table class="data-table" id="items-table">
+                  <caption class="visually-hidden">Invoice line items</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Type</th>
+                      <th scope="col">Description</th>
+                      <th scope="col" class="is-numeric">Qty</th>
+                      <th scope="col" class="is-numeric">Rate</th>
+                      <th scope="col" class="is-numeric">Tax</th>
+                      <th scope="col" class="is-numeric">Total</th>
+                      <th scope="col"><span class="visually-hidden">Remove row</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="items-body">
+                    <!-- Rows are added by scripts/builder.js -->
+                  </tbody>
+                </table>
+
+                <p class="field__hint" id="items-empty-hint" hidden>No items yet. Choose a template above or add a row to get started.</p>
+
+                <button type="button" class="button button--ghost button--small u-mt-md" id="add-item-button">
+                  + Add item
+                </button>
+              </fieldset>
+
+              <fieldset>
+                <legend>Adjustments<span class="legend-lede">Discount, fee, and any amount already paid.</span></legend>
+                <div class="field-row field-row--3">
+                  <div class="field">
+                    <label class="field__label" for="discount">Discount ($)</label>
+                    <input class="field__input" type="number" id="discount" name="discount" min="0" step="0.01" value="0">
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="fee">Fee ($)</label>
+                    <input class="field__input" type="number" id="fee" name="fee" min="0" step="0.01" value="0">
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="amount-paid">Paid ($)</label>
+                    <input class="field__input" type="number" id="amount-paid" name="amountPaid" min="0" step="0.01" value="0">
+                  </div>
+                </div>
+              </fieldset>
+            </section>
+
+            <section id="section-design" aria-labelledby="section-design-heading">
+              <h2 class="visually-hidden" id="section-design-heading">Design</h2>
+              <fieldset>
+                <legend>Design<span class="legend-lede">Pick a look for the finished invoice. The choice carries over to print.</span></legend>
+                <div class="option-picker">
+                  <label class="option-picker__choice">
+                    <input type="radio" name="designStyle" value="simple" checked>
+                    <span>Simple</span>
+                  </label>
+                  <label class="option-picker__choice">
+                    <input type="radio" name="designStyle" value="modern">
+                    <span>Modern</span>
+                  </label>
+                  <label class="option-picker__choice">
+                    <input type="radio" name="designStyle" value="professional">
+                    <span>Professional</span>
+                  </label>
+                </div>
+              </fieldset>
+            </section>
+
+            <section id="section-formatting" aria-labelledby="section-formatting-heading">
+              <h2 class="visually-hidden" id="section-formatting-heading">Formatting</h2>
+              <fieldset>
+                <legend>Formatting<span class="legend-lede">Choose what shows on the invoice and how it's arranged.</span></legend>
+
+                <div class="toggle-list">
+                  <div class="toggle-row">
+                    <input type="checkbox" id="show-logo" name="showLogo" checked>
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="show-logo">Show logo</label>
+                    </span>
+                  </div>
+                  <div class="toggle-row">
+                    <input type="checkbox" id="show-business-email" name="showBusinessEmail" checked>
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="show-business-email">Show business email</label>
+                    </span>
+                  </div>
+                  <div class="toggle-row">
+                    <input type="checkbox" id="show-customer-email" name="showCustomerEmail" checked>
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="show-customer-email">Show customer email</label>
+                    </span>
+                  </div>
+                  <div class="toggle-row">
+                    <input type="checkbox" id="show-item-descriptions" name="showItemDescriptions" checked>
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="show-item-descriptions">Show item descriptions</label>
+                    </span>
+                  </div>
+                  <div class="toggle-row">
+                    <input type="checkbox" id="show-divider-header" name="showDividerAfterHeader" checked>
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="show-divider-header">Add a line under the header</label>
+                    </span>
+                  </div>
+                  <div class="toggle-row">
+                    <input type="checkbox" id="show-divider-totals" name="showDividerBeforeTotals" checked>
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="show-divider-totals">Add a line above the totals</label>
+                    </span>
+                  </div>
+                  <div class="toggle-row">
+                    <input type="checkbox" id="show-note" name="showNote" checked>
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="show-note">Show the closing note</label>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="format-group">
+                  <span class="format-group__label" id="logo-position-label">Logo placement</span>
+                  <div class="option-picker" role="group" aria-labelledby="logo-position-label">
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoPosition" value="top-left">
+                      <span>Top left</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoPosition" value="top-right" checked>
+                      <span>Top right</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoPosition" value="bottom-left">
+                      <span>Bottom left</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoPosition" value="bottom-right">
+                      <span>Bottom right</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="format-group">
+                  <span class="format-group__label" id="logo-shape-label">Logo shape</span>
+                  <div class="option-picker" role="group" aria-labelledby="logo-shape-label">
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoShape" value="square">
+                      <span>Square</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoShape" value="rounded">
+                      <span>Rounded</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoShape" value="circle">
+                      <span>Circle</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoShape" value="ellipse" checked>
+                      <span>Ellipse</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="format-group">
+                  <span class="format-group__label" id="logo-name-label">Business name with logo</span>
+                  <div class="option-picker" role="group" aria-labelledby="logo-name-label">
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoNameDisplay" value="inside" checked>
+                      <span>Inside</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoNameDisplay" value="beside">
+                      <span>Beside</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="logoNameDisplay" value="hidden">
+                      <span>Hidden</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="format-group">
+                  <label class="field__label" for="logo-size">Logo and name size</label>
+                  <div class="opacity-control">
+                    <input type="range" id="logo-size" name="logoSize" min="50" max="200" step="5" value="100">
+                    <span class="opacity-control__value" id="logo-size-value">100%</span>
+                  </div>
+                </div>
+
+                <div class="format-group">
+                  <span class="format-group__label" id="spacing-label">Spacing</span>
+                  <div class="option-picker" role="group" aria-labelledby="spacing-label">
+                    <label class="option-picker__choice">
+                      <input type="radio" name="spacing" value="compact">
+                      <span>Compact</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="spacing" value="normal" checked>
+                      <span>Normal</span>
+                    </label>
+                    <label class="option-picker__choice">
+                      <input type="radio" name="spacing" value="spacious">
+                      <span>Spacious</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="format-group">
+                  <div class="toggle-row">
+                    <input type="checkbox" id="watermark-enabled" name="watermarkEnabled">
+                    <span class="toggle-row__text">
+                      <label class="toggle-row__label" for="watermark-enabled">Add a background watermark</label>
+                      <span class="toggle-row__hint">A faint word or image behind the invoice, like "Draft" or a company mark.</span>
+                    </span>
+                  </div>
+
+                  <div id="watermark-fields" hidden>
+                    <span class="format-group__label u-mt-md" id="watermark-type-label">Watermark type</span>
+                    <div class="option-picker" role="group" aria-labelledby="watermark-type-label">
+                      <label class="option-picker__choice">
+                        <input type="radio" name="watermarkType" value="text" checked>
+                        <span>Text</span>
+                      </label>
+                      <label class="option-picker__choice">
+                        <input type="radio" name="watermarkType" value="image">
+                        <span>Image</span>
+                      </label>
+                    </div>
+
+                    <div class="field u-mt-md" id="watermark-text-field">
+                      <label class="field__label" for="watermark-text">Watermark text</label>
+                      <input class="field__input" type="text" id="watermark-text" name="watermarkText" placeholder="SAMPLE" maxlength="20">
+                    </div>
+
+                    <div class="logo-picker u-mt-md" id="watermark-image-field" hidden>
+                      <span class="logo-picker__preview" id="watermark-image-preview">
+                        <span class="visually-hidden">No watermark image selected</span>
+                      </span>
+                      <div class="field logo-picker__field">
+                        <label class="field__label" for="watermark-image">Watermark image</label>
+                        <input class="field__input" type="file" id="watermark-image" name="watermarkImage" accept="image/*">
+                        <span class="field__hint">Uses your business logo by default. Upload a different image here to use that instead. PNG with a transparent background works best.</span>
+                      </div>
+                    </div>
+
+                    <div class="field u-mt-md">
+                      <label class="field__label" for="watermark-opacity">Watermark transparency</label>
+                      <div class="opacity-control">
+                        <input type="range" id="watermark-opacity" name="watermarkOpacity" min="2" max="35" step="1" value="8">
+                        <span class="opacity-control__value" id="watermark-opacity-value">8%</span>
+                      </div>
+                    </div>
+
+                    <div class="field u-mt-md">
+                      <label class="field__label" for="watermark-size">Watermark size</label>
+                      <div class="opacity-control">
+                        <input type="range" id="watermark-size" name="watermarkSize" min="40" max="200" step="5" value="100">
+                        <span class="opacity-control__value" id="watermark-size-value">100%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+            </section>
+
+            <div class="builder-actions">
+              <button type="submit" class="button button--primary">Save &amp; go to print preview</button>
+              <button type="reset" class="button button--danger" id="reset-form-button">Reset form</button>
+            </div>
+
+            <p class="builder-status" id="builder-status" role="status"></p>
+          </form>
+        </div>
+
+        <div class="builder-layout__preview">
+          <h2 class="live-preview-title u-text-center" id="invoice-preview-heading">Live preview</h2>
+          <p class="visually-hidden" id="amount-due-live" aria-live="polite"></p>
+          <div class="invoice" id="invoice-preview">
+            <p class="invoice--empty">Add at least one item to see the invoice preview.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <nav class="site-footer__nav" aria-label="Footer">
+      <ul class="site-footer__list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="builder.html" aria-current="page">Builder</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__copyright">&copy; 2026 Invoice Generator. All rights reserved.</p>
+  </footer>
+
+  <script src="scripts/common.js" defer></script>
+  <script src="scripts/invoice-data.js" defer></script>
+  <script src="scripts/builder.js" defer></script>
+</body>
+</html>

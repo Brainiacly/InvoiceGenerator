@@ -1,0 +1,199 @@
+.builder-layout {
+  display: grid;
+  gap: var(--space-xl);
+  align-items: stretch;
+}
+
+@media (min-width: 64rem) {
+  .builder-layout {
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .builder-layout__preview .invoice {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    max-height: calc(100vh - var(--header-height) - 4rem);
+    overflow-y: auto;
+  }
+}
+
+.live-preview-title {
+  font-size: var(--font-size-medium);
+  margin-bottom: var(--space-2xs);
+}
+
+.live-preview-caption {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  margin-bottom: var(--space-md);
+}
+
+.logo-picker__field {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 12rem;
+}
+
+.logo-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.logo-picker__preview {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: var(--color-surface-tint);
+  border: 0.0625rem dashed var(--color-border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.logo-picker__preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.builder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.builder-status {
+  font-size: var(--font-size-small);
+  border-radius: var(--radius-small);
+  padding: var(--space-sm);
+  margin-top: var(--space-md);
+  display: none;
+}
+
+.builder-status.is-visible {
+  display: block;
+}
+
+.builder-status--success {
+  color: var(--color-success-text);
+  background-color: var(--color-success-background);
+}
+
+.builder-status--error {
+  color: var(--color-danger);
+  background-color: var(--color-danger-background);
+}
+
+/* tax rate definition rows */
+
+.rate-row {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.rate-row + .rate-row {
+  margin-top: var(--space-sm);
+}
+
+.rate-row__name {
+  flex: 1;
+  min-width: 10rem;
+  margin-bottom: 0;
+}
+
+.rate-row__rate {
+  width: 8rem;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.rate-row__remove {
+  flex-shrink: 0;
+  padding-bottom: 0.7rem;
+}
+
+/* template sample cards at the top of the builder page */
+
+.template-sample {
+  display: flex;
+  flex-direction: column;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-subtle);
+  padding: var(--space-md);
+  height: 100%;
+}
+
+.template-sample__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: var(--space-sm);
+}
+
+.template-sample__icon--primary {
+  background-color: var(--color-surface-tint);
+}
+
+.template-sample__icon--teal {
+  background-color: honeydew;
+}
+
+.template-sample__icon--purple {
+  background-color: lavender;
+}
+
+.template-sample__icon--green {
+  background-color: honeydew;
+}
+
+.template-sample__title {
+  margin: 0 0 var(--space-2xs);
+  font-size: var(--font-size-base);
+}
+
+.template-sample__desc {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  margin-bottom: var(--space-sm);
+}
+
+.template-sample__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  font-size: var(--font-size-small);
+  border-top: 0.0625rem solid var(--color-divider);
+  padding-top: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.template-sample__list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.template-sample__button {
+  margin-top: auto;
+}
+
+.builder-hint {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-small);
+  margin-top: 0;
+  margin-bottom: var(--space-lg);
+}
