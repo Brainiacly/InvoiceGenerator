@@ -42,19 +42,25 @@
   <main class="page-main" id="main-content">
     <div class="container">
       <h1 class="visually-hidden">Pricing</h1>
-    
+
       <section class="page-section" aria-labelledby="plans-heading">
-        <h2 class="visually-hidden" id="plans-heading">Plans</h2>
+        <div class="card">
+          <h2 id="plans-heading" class="u-text-center">Free to build. Worth paying to never lose.</h2>
+          <p class="card__lede u-text-center pricing-page-lede">Basic is genuinely free, no card, no catch, and your invoices stay on your device forever. Professional exists for one honest reason: local storage disappears the moment a cache gets cleared, a browser gets reinstalled, or a laptop gets replaced. Professional moves your invoices to a real server, so none of that can happen &mdash; and it unlocks the tools power users ask for most: saving any invoice as a reusable template, building templates from scratch, and more invoice design options.</p>
+        </div>
         <div class="pricing-grid">
           <div class="card pricing-card is-selected">
             <p class="badge badge--selected">Selected</p>
             <h3>Basic</h3>
             <p class="pricing-card__price">$0</p>
+            <p class="pricing-card__pitch">Everything you need to send a professional invoice today.</p>
             <ul class="pricing-card__features">
               <li><span class="icon-dot icon-dot--green" aria-hidden="true"></span> Create invoices</li>
               <li><span class="icon-dot icon-dot--green" aria-hidden="true"></span> No watermarks</li>
               <li><span class="icon-dot icon-dot--green" aria-hidden="true"></span> Print and save PDF</li>
               <li><span class="icon-dot icon-dot--green" aria-hidden="true"></span> Email draft</li>
+              <li><span class="icon-dot icon-dot--green" aria-hidden="true"></span> Saved invoice history on this device</li>
+              <li><span class="icon-dot icon-dot--green" aria-hidden="true"></span> Local sign-in account</li>
             </ul>
             <a class="button button--primary button--full" href="builder.html">Build an invoice</a>
           </div>
@@ -63,11 +69,14 @@
             <p class="badge badge--planned">Planned</p>
             <h3>Professional</h3>
             <p class="pricing-card__price">Future</p>
+            <p class="pricing-card__pitch">For anyone who can't afford to lose a single invoice.</p>
             <ul class="pricing-card__features">
+              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Real, persistent secure cloud storage</li>
+              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Invoice history that never expires</li>
+              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Save any invoice as a reusable template</li>
+              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Build custom templates from scratch</li>
+              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> More invoice design &amp; formatting options</li>
               <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Saved customers</li>
-              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Invoice history</li>
-              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> More designs</li>
-              <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Reusable templates</li>
             </ul>
             <button class="button button--secondary button--full" type="button" disabled>Planned</button>
           </div>
@@ -76,6 +85,7 @@
             <p class="badge badge--planned">Planned</p>
             <h3>Business</h3>
             <p class="pricing-card__price">Future</p>
+            <p class="pricing-card__pitch">For teams juggling multiple jobs and clients at once.</p>
             <ul class="pricing-card__features">
               <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Job files</li>
               <li><span class="icon-dot icon-dot--primary" aria-hidden="true"></span> Export options</li>
@@ -125,5 +135,6 @@
   </footer>
 
   <script src="scripts/common.js" defer></script>
+  <script src="scripts/invoice-data.js" defer></script>
 </body>
 </html>

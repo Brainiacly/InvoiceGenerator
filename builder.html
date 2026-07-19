@@ -51,30 +51,47 @@
           <div class="grid grid--4" id="template-slots">
             <!-- Cards are added by scripts/builder.js -->
           </div>
+          <p class="field__hint u-text-center u-mt-md">These four are free forever. Saving one of your own finished invoices as a reusable template, or building a custom one from scratch, is coming with <a href="pricing.html">Professional</a>.</p>
         </div>
       </section>
 
       
 
       <nav aria-label="Builder sections" class="no-print">
-        <ul class="step-list">
-          <li><a class="step-list__link" href="#section-business"><span class="step-list__number" aria-hidden="true">1</span> Business</a></li>
-          <li><a class="step-list__link" href="#section-customer"><span class="step-list__number" aria-hidden="true">2</span> Customer</a></li>
-          <li><a class="step-list__link" href="#section-items"><span class="step-list__number" aria-hidden="true">3</span> Items</a></li>
-          <li><a class="step-list__link" href="#section-design"><span class="step-list__number" aria-hidden="true">4</span> Design</a></li>
-          <li><a class="step-list__link" href="#section-formatting"><span class="step-list__number" aria-hidden="true">5</span> Formatting</a></li>
-          <li><a class="step-list__link" href="#invoice-preview-heading"><span class="step-list__number" aria-hidden="true">6</span> Preview</a></li>
-        </ul>
+        <div class="builder-toolbar">
+          <ul class="step-list">
+            <li><a class="step-list__link" href="#section-business" data-panel-link="section-business"><span class="step-list__number" aria-hidden="true">1</span> Business</a></li>
+            <li><a class="step-list__link" href="#section-customer" data-panel-link="section-customer"><span class="step-list__number" aria-hidden="true">2</span> Customer</a></li>
+            <li><a class="step-list__link" href="#section-items" data-panel-link="section-items"><span class="step-list__number" aria-hidden="true">3</span> Items</a></li>
+            <li><a class="step-list__link" href="#section-design" data-panel-link="section-design"><span class="step-list__number" aria-hidden="true">4</span> Design</a></li>
+            <li><a class="step-list__link" href="#section-formatting" data-panel-link="section-formatting"><span class="step-list__number" aria-hidden="true">5</span> Formatting</a></li>
+            <li><a class="step-list__link" href="#invoice-preview-heading"><span class="step-list__number" aria-hidden="true">6</span> Preview</a></li>
+          </ul>
+          <div class="builder-toolbar__panel-buttons">
+            <button type="button" class="button button--ghost button--small" id="expand-all-button">Expand all</button>
+            <button type="button" class="button button--ghost button--small" id="collapse-all-button">Collapse all</button>
+          </div>
+        </div>
       </nav>
 
       <div class="builder-layout">
         <div class="builder-layout__form no-print">
           <form id="invoice-form" novalidate>
 
-            <section id="section-business" aria-labelledby="section-business-heading">
-              <h2 class="visually-hidden" id="section-business-heading">Business</h2>
+            <input type="hidden" id="invoice-id" name="invoiceId" value="">
+
+            <details class="panel" id="section-business" open>
+              <summary class="panel__summary">
+                <span class="panel__index" aria-hidden="true">1</span>
+                <span class="panel__heading">
+                  <span class="panel__title">Business</span>
+                  <span class="panel__lede">Your company details and logo.</span>
+                </span>
+                <span class="panel__chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="panel__body">
               <fieldset>
-                <legend>Business<span class="legend-lede"></span></legend>
+                <legend class="visually-hidden">Business</legend>
 
                 <div class="toggle-row">
                   <input type="checkbox" id="show-logo" name="showLogo" checked>
@@ -109,13 +126,33 @@
                     <input class="field__input" type="text" id="invoice-number" name="invoiceNumber">
                   </div>
                 </div>
-              </fieldset>
-            </section>
 
-            <section id="section-customer" aria-labelledby="section-customer-heading">
-              <h2 class="visually-hidden" id="section-customer-heading">Customer</h2>
+                <div class="field-row field-row--2">
+                  <div class="field">
+                    <label class="field__label" for="invoice-date">Invoice date</label>
+                    <input class="field__input" type="date" id="invoice-date" name="invoiceDate">
+                  </div>
+                  <div class="field">
+                    <label class="field__label" for="due-date">Due date (optional)</label>
+                    <input class="field__input" type="date" id="due-date" name="dueDate">
+                  </div>
+                </div>
+              </fieldset>
+              </div>
+            </details>
+
+            <details class="panel" id="section-customer">
+              <summary class="panel__summary">
+                <span class="panel__index" aria-hidden="true">2</span>
+                <span class="panel__heading">
+                  <span class="panel__title">Customer</span>
+                  <span class="panel__lede">Who the invoice goes to.</span>
+                </span>
+                <span class="panel__chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="panel__body">
               <fieldset>
-                <legend>Customer<span class="legend-lede">Who the invoice goes to.</span></legend>
+                <legend class="visually-hidden">Customer</legend>
                 <div class="field-row field-row--2">
                   <div class="field" id="customer-name-field">
                     <label class="field__label" for="customer-name">Customer name</label>
@@ -128,10 +165,19 @@
                   </div>
                 </div>
               </fieldset>
-            </section>
+              </div>
+            </details>
 
-            <section id="section-items" aria-labelledby="section-items-heading">
-              <h2 class="visually-hidden" id="section-items-heading">Items</h2>
+            <details class="panel" id="section-items">
+              <summary class="panel__summary">
+                <span class="panel__index" aria-hidden="true">3</span>
+                <span class="panel__heading">
+                  <span class="panel__title">Items</span>
+                  <span class="panel__lede">Tax rates, line items, and adjustments.</span>
+                </span>
+                <span class="panel__chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="panel__body">
               <fieldset>
                 <legend>Tax rates<span class="legend-lede">Name and set as many tax rates as this job needs. Each item picks one from its own dropdown.</span></legend>
 
@@ -189,12 +235,21 @@
                   </div>
                 </div>
               </fieldset>
-            </section>
+              </div>
+            </details>
 
-            <section id="section-design" aria-labelledby="section-design-heading">
-              <h2 class="visually-hidden" id="section-design-heading">Design</h2>
+            <details class="panel" id="section-design">
+              <summary class="panel__summary">
+                <span class="panel__index" aria-hidden="true">4</span>
+                <span class="panel__heading">
+                  <span class="panel__title">Design</span>
+                  <span class="panel__lede">Pick a look for the finished invoice. The choice carries over to print.</span>
+                </span>
+                <span class="panel__chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="panel__body">
               <fieldset>
-                <legend>Design<span class="legend-lede">Pick a look for the finished invoice. The choice carries over to print.</span></legend>
+                <legend class="visually-hidden">Design</legend>
                 <div class="option-picker">
                   <label class="option-picker__choice">
                     <input type="radio" name="designStyle" value="simple" checked>
@@ -210,12 +265,21 @@
                   </label>
                 </div>
               </fieldset>
-            </section>
+              </div>
+            </details>
 
-            <section id="section-formatting" aria-labelledby="section-formatting-heading">
-              <h2 class="visually-hidden" id="section-formatting-heading">Formatting</h2>
+            <details class="panel" id="section-formatting">
+              <summary class="panel__summary">
+                <span class="panel__index" aria-hidden="true">5</span>
+                <span class="panel__heading">
+                  <span class="panel__title">Formatting</span>
+                  <span class="panel__lede">Choose what shows on the invoice and how it's arranged.</span>
+                </span>
+                <span class="panel__chevron" aria-hidden="true"></span>
+              </summary>
+              <div class="panel__body">
               <fieldset>
-                <legend>Formatting<span class="legend-lede">Choose what shows on the invoice and how it's arranged.</span></legend>
+                <legend class="visually-hidden">Formatting</legend>
 
                 <div class="toggle-list">
                   <div class="toggle-row">
@@ -254,6 +318,12 @@
                       <label class="toggle-row__label" for="show-note">Show the closing note</label>
                     </span>
                   </div>
+                </div>
+
+                <div class="field u-mt-md" id="note-text-field">
+                  <label class="field__label" for="note-text">Closing note</label>
+                  <textarea class="field__input" id="note-text" name="noteText" rows="2" maxlength="200">Thank you for your business.</textarea>
+                  <span class="field__hint">Printed at the bottom of the invoice, such as payment terms or a thank-you.</span>
                 </div>
 
                 <div id="logo-format-fields">
@@ -399,13 +469,32 @@
                         <span class="opacity-control__value" id="watermark-size-value">135%</span>
                       </div>
                     </div>
+
+                    <div class="watermark-position-grid">
+                      <div class="field">
+                        <label class="field__label" for="watermark-position-x">Watermark left and right position</label>
+                        <div class="opacity-control">
+                          <input type="range" id="watermark-position-x" name="watermarkPositionX" min="15" max="85" step="1" value="50">
+                          <span class="opacity-control__value opacity-control__value--position" id="watermark-position-x-value">Centered</span>
+                        </div>
+                      </div>
+
+                      <div class="field">
+                        <label class="field__label" for="watermark-position-y">Watermark up and down position</label>
+                        <div class="opacity-control">
+                          <input type="range" id="watermark-position-y" name="watermarkPositionY" min="15" max="85" step="1" value="50">
+                          <span class="opacity-control__value opacity-control__value--position" id="watermark-position-y-value">Centered</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </fieldset>
-            </section>
+              </div>
+            </details>
 
             <div class="builder-actions">
-              <button type="submit" class="button button--primary">Save &amp; go to print preview</button>
+              <button type="submit" class="button button--primary">Save to history &amp; go to print preview</button>
               <button type="reset" class="button button--danger" id="reset-form-button">Reset form</button>
             </div>
 

@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
   <title>Account and History | Invoice Generator</title>
-  <meta name="description" content="A preview of the planned invoice history, saved customers, and export features.">
+  <meta name="description" content="Every invoice you've saved on this device, ready to reopen, print, duplicate, or remove.">
   <link rel="stylesheet" href="styles/variables.css">
   <link rel="stylesheet" href="styles/base.css">
   <link rel="stylesheet" href="styles/layout.css">
@@ -42,24 +42,50 @@
   <main class="page-main" id="main-content">
     <div class="container">
       <h1 class="visually-hidden">Account and history</h1>
+
       <div class="future-banner">
-        <p class="future-banner__text">Future updates &mdash; nothing on this page is live yet</p>
+        <p class="future-banner__text">Saved invoices live on this device today. Persistent cloud storage, reusable templates, and export tools are still planned.</p>
       </div>
+
+      <div class="card account-banner" id="account-banner" hidden>
+        <p class="account-banner__text" id="account-banner-text"></p>
+        <div class="button-row" id="account-banner-actions"></div>
+      </div>
+
+      <section class="page-section" aria-labelledby="saved-heading">
+        <div class="card">
+          <div class="history-header">
+            <div>
+              <h2 id="saved-heading">Saved invoices</h2>
+              <p class="card__lede" id="history-count-hint">Loading your saved invoices&hellip;</p>
+            </div>
+            <a class="button button--primary" href="builder.html">+ New invoice</a>
+          </div>
+
+          <p class="field__hint" id="history-status" role="status"></p>
+
+          <ul class="history-list" id="history-list"></ul>
+
+          <div id="history-empty-state" hidden>
+            <p class="invoice--empty">No saved invoices yet. <a href="builder.html">Build your first one</a> and it will show up here.</p>
+          </div>
+        </div>
+      </section>
 
       <section class="page-section" aria-labelledby="upcoming-heading">
         <h2 class="visually-hidden" id="upcoming-heading">Upcoming features</h2>
         <div class="grid grid--4">
           <div class="card card--muted">
-            <h3>Saved invoices</h3>
-            <p class="card__lede">Every finished invoice, ready to reopen or resend.</p>
-          </div>
-          <div class="card card--muted">
             <h3>Customers</h3>
             <p class="card__lede">Reusable names, emails, and job addresses.</p>
           </div>
           <div class="card card--muted">
-            <h3>Templates</h3>
-            <p class="card__lede">Save an invoice layout and reuse it for the next job.</p>
+            <h3>Persistent storage</h3>
+            <p class="card__lede">Accounts exist today, but only in this browser's local storage. A real server and database will keep your history safe even if this device doesn't survive.</p>
+          </div>
+          <div class="card card--muted">
+            <h3>Reusable templates</h3>
+            <p class="card__lede">Save any finished invoice as a template, or build a custom one from scratch, instead of starting over each time.</p>
           </div>
           <div class="card card--muted">
             <h3>Exports</h3>
@@ -71,7 +97,7 @@
       <section class="page-section" aria-labelledby="templates-heading">
         <div class="card">
           <h2 id="templates-heading" class="u-text-center">Looking for invoice templates?</h2>
-          <p class="card__lede u-text-center">The four starter templates work today. You'll find them at the top of the Builder page.</p>
+          <p class="card__lede u-text-center">The four starter templates work today, free, at the top of the Builder page. Saving your own invoices as templates, or building custom ones from scratch, is a Professional feature that's coming next.</p>
           <div class="button-row button-row--center">
             <a class="button button--primary" href="builder.html">Build an invoice</a>
             <a class="button button--secondary" href="pricing.html">See pricing</a>
@@ -95,5 +121,7 @@
   </footer>
 
   <script src="scripts/common.js" defer></script>
+  <script src="scripts/invoice-data.js" defer></script>
+  <script src="scripts/history.js" defer></script>
 </body>
 </html>
