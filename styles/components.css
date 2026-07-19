@@ -200,6 +200,10 @@
   text-align: center;
 }
 
+.future-banner--info {
+  background-image: linear-gradient(120deg, var(--color-nav-gradient-start), var(--color-nav-gradient-end));
+}
+
 .future-banner__text {
   color: white;
   font-weight: 800;
@@ -207,6 +211,12 @@
   text-transform: uppercase;
   margin: 0;
   font-size: var(--font-size-base);
+}
+
+.future-banner--info .future-banner__text {
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-weight: 600;
 }
 
 .chip-list {

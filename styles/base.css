@@ -38,6 +38,7 @@ body {
   color: var(--color-text-body);
   font-family: var(--font-family-base);
   font-size: var(--font-size-base);
+  font-weight: 400;
   line-height: var(--line-height-base);
 }
 

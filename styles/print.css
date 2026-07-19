@@ -6,10 +6,17 @@
     display: none !important;
   }
 
+  html,
   body {
-    background-color: var(--color-page-background);
-    background-image: none;
+    background: var(--color-page-background) !important;
+    color: var(--color-text-body) !important;
+  }
+
+  body {
     display: block;
+    font-size: 11pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .page-main {
@@ -27,18 +34,150 @@
   }
 
   #invoice-print-area {
-    background-color: var(--color-page-background);
+    display: block !important;
+    background: var(--color-page-background) !important;
     border-radius: 0;
     padding: 0;
   }
 
   .invoice {
+    width: 100%;
+    max-width: none;
+    break-inside: auto;
     border: none;
+    border-radius: 0;
     box-shadow: none;
     padding: 0;
+    color: var(--color-text-body) !important;
+  }
+
+  .invoice__content,
+  .invoice__title,
+  .invoice__meta strong,
+  .invoice__meta span,
+  .invoice__number,
+  .invoice table,
+  .invoice table th,
+  .invoice table td,
+  .invoice table td small,
+  .totals,
+  .totals__row {
+    color: var(--color-text-body) !important;
+  }
+
+  .invoice__rule {
+    border-top-color: var(--color-text-body) !important;
+  }
+
+  .invoice table thead {
+    display: table-header-group;
+  }
+
+  .invoice table tr,
+  .totals__row {
+    break-inside: avoid;
+  }
+
+  .invoice .data-table th,
+  .invoice .data-table td {
+    border-color: var(--color-print-rule) !important;
+  }
+
+  .invoice__note {
+    color: var(--color-brand-primary-dark) !important;
+  }
+
+  a {
+    color: var(--color-text-body) !important;
+    text-decoration: none !important;
+  }
+
+  .copies-grid__copy-label {
+    display: none;
+  }
+
+  .copies-grid[data-copies="1"] {
+    display: block;
+  }
+
+  .copies-grid[data-copies="2"] {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+    gap: 0;
+  }
+
+  .copies-grid[data-copies="4"] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100vh;
+    gap: 0;
+  }
+
+  .copies-grid[data-copies="2"] .copies-grid__copy,
+  .copies-grid[data-copies="4"] .copies-grid__copy {
+    overflow: hidden;
+    padding: 0.25in;
+    border-bottom: 0.0625rem dashed var(--color-print-rule);
+    box-sizing: border-box;
+  }
+
+  .copies-grid[data-copies="4"] .copies-grid__copy:nth-child(odd) {
+    border-right: 0.0625rem dashed var(--color-print-rule);
+  }
+
+  .copies-grid[data-copies="2"] .invoice,
+  .copies-grid[data-copies="4"] .invoice {
+    height: 100%;
+  }
+
+  .copies-grid[data-copies="2"] .invoice {
+    font-size: 0.85em;
+  }
+
+  .copies-grid[data-copies="4"] .invoice {
+    font-size: 0.68em;
+  }
+
+  /*
+    Fallback used when JS measures that a copy's real content is taller
+    than its compact slot. Tiling with a fixed height cannot paginate a
+    copy across multiple physical pages: CSS Grid has no concept of
+    "continue this cell on the next sheet", so an oversized copy would
+    otherwise get clipped, or the next copy would start partway down the
+    same page as the overflow. Stacked mode undoes the compact sizing so
+    each copy is plain full-size document flow again, and forces a page
+    break between copies so every copy starts on its own fresh page and
+    ends wherever its content naturally ends, no matter how many physical
+    pages it needs.
+  */
+  .copies-grid[data-layout="stacked"] {
+    display: block !important;
+    height: auto !important;
+  }
+
+  .copies-grid[data-layout="stacked"] .copies-grid__copy {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+    border: none !important;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .copies-grid[data-layout="stacked"] .copies-grid__copy:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .copies-grid[data-layout="stacked"] .invoice {
+    height: auto !important;
+    font-size: 1em !important;
   }
 
   @page {
+    size: letter;
     margin: 0.6in;
   }
 }

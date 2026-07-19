@@ -29,8 +29,18 @@
   var watermarkOpacityValue = document.getElementById("watermark-opacity-value");
   var watermarkSize = document.getElementById("watermark-size");
   var watermarkSizeValue = document.getElementById("watermark-size-value");
+  var watermarkPositionX = document.getElementById("watermark-position-x");
+  var watermarkPositionXValue = document.getElementById("watermark-position-x-value");
+  var watermarkPositionY = document.getElementById("watermark-position-y");
+  var watermarkPositionYValue = document.getElementById("watermark-position-y-value");
   var logoSize = document.getElementById("logo-size");
   var logoSizeValue = document.getElementById("logo-size-value");
+  var invoiceIdInput = document.getElementById("invoice-id");
+  var showNoteCheckbox = document.getElementById("show-note");
+  var noteTextField = document.getElementById("note-text-field");
+  var panelLinks = document.querySelectorAll("[data-panel-link]");
+  var expandAllButton = document.getElementById("expand-all-button");
+  var collapseAllButton = document.getElementById("collapse-all-button");
 
   var rowIdCounter = 0;
   var taxRateIdCounter = 0;
@@ -41,6 +51,47 @@
     { input: document.getElementById("business-name"), message: "Enter a business name." },
     { input: document.getElementById("customer-name"), message: "Enter a customer name." }
   ];
+
+  /* ---------- accordion panels ---------- */
+
+  function allPanels() {
+    return qsa(".panel", form);
+  }
+
+  function openPanel(panel) {
+    if (panel && "open" in panel) {
+      panel.open = true;
+    }
+  }
+
+  function openPanelContaining(element) {
+    var panel = element.closest(".panel");
+    openPanel(panel);
+  }
+
+  function setUpPanelNavigation() {
+    panelLinks.forEach(function (link) {
+      link.addEventListener("click", function () {
+        var targetId = link.dataset.panelLink;
+        var panel = document.getElementById(targetId);
+        openPanel(panel);
+      });
+    });
+
+    if (expandAllButton) {
+      expandAllButton.addEventListener("click", function () {
+        allPanels().forEach(openPanel);
+      });
+    }
+
+    if (collapseAllButton) {
+      collapseAllButton.addEventListener("click", function () {
+        allPanels().forEach(function (panel) {
+          panel.open = false;
+        });
+      });
+    }
+  }
 
   /* ---------- tax rates ---------- */
 
@@ -236,7 +287,10 @@
 
   function buildInvoiceFromForm() {
     var invoice = InvoiceApp.createEmptyInvoice();
+    invoice.id = invoiceIdInput.value || "";
     invoice.invoiceNumber = qs("#invoice-number").value || invoice.invoiceNumber;
+    invoice.invoiceDate = qs("#invoice-date").value || invoice.invoiceDate;
+    invoice.dueDate = qs("#due-date").value || "";
     invoice.business.name = qs("#business-name").value;
     invoice.business.email = qs("#business-email").value;
     invoice.business.logoDataUrl = currentLogoDataUrl;
@@ -264,6 +318,7 @@
       showDividerAfterHeader: qs("#show-divider-header").checked,
       showDividerBeforeTotals: qs("#show-divider-totals").checked,
       showNote: qs("#show-note").checked,
+      noteText: qs("#note-text").value || "",
       logoPosition: checkedLogoPosition ? checkedLogoPosition.value : "top-right",
       logoShape: checkedLogoShape ? checkedLogoShape.value : "ellipse",
       logoNameDisplay: checkedLogoNameDisplay ? checkedLogoNameDisplay.value : "inside",
@@ -274,7 +329,9 @@
       watermarkText: qs("#watermark-text").value || "SAMPLE",
       watermarkImageDataUrl: currentWatermarkImageDataUrl,
       watermarkOpacity: watermarkOpacity.value,
-      watermarkSize: watermarkSize.value
+      watermarkSize: watermarkSize.value,
+      watermarkPositionX: watermarkPositionX.value,
+      watermarkPositionY: watermarkPositionY.value
     };
 
     return invoice;
@@ -338,6 +395,7 @@
       addRow(item);
     });
     recalculateAndRender();
+    openPanel(document.getElementById("section-items"));
 
     var firstInput = itemsBody.querySelector("select, input");
     if (firstInput) {
@@ -374,12 +432,34 @@
     recalculateAndRender();
   }
 
+  function handleShowNoteToggle() {
+    noteTextField.hidden = !showNoteCheckbox.checked;
+    recalculateAndRender();
+  }
+
   function handleWatermarkOpacityInput() {
     watermarkOpacityValue.textContent = watermarkOpacity.value + "%";
   }
 
   function handleWatermarkSizeInput() {
     watermarkSizeValue.textContent = watermarkSize.value + "%";
+  }
+
+  function positionLabel(value, lowerLabel, higherLabel) {
+    var position = Number(value);
+    if (position === 50) {
+      return "Centered";
+    }
+    var distance = Math.abs(position - 50);
+    return distance + "% " + (position < 50 ? lowerLabel : higherLabel);
+  }
+
+  function handleWatermarkPositionXInput() {
+    watermarkPositionXValue.textContent = positionLabel(watermarkPositionX.value, "left", "right");
+  }
+
+  function handleWatermarkPositionYInput() {
+    watermarkPositionYValue.textContent = positionLabel(watermarkPositionY.value, "up", "down");
   }
 
   function handleLogoSizeInput() {
@@ -435,6 +515,7 @@
     var wrapper = fieldInput.closest(".field");
     wrapper.classList.add("has-error");
     fieldInput.setAttribute("aria-invalid", "true");
+    openPanelContaining(fieldInput);
   }
 
   function clearFieldError(fieldInput) {
@@ -472,18 +553,33 @@
     var invoice = buildInvoiceFromForm();
 
     if (!invoice.items.length) {
+      openPanel(document.getElementById("section-items"));
       showStatus("Add at least one item before saving the invoice.", "error");
       return;
     }
 
+    var savedRecord = InvoiceApp.saveToHistory(invoice);
+    if (savedRecord) {
+      invoiceIdInput.value = savedRecord.id;
+      InvoiceApp.saveDraft(savedRecord);
+      showStatus("Invoice saved to your history. Opening print preview\u2026", "success");
+      window.location.href = "print-preview.html?id=" + encodeURIComponent(savedRecord.id);
+      return;
+    }
+
     InvoiceApp.saveDraft(invoice);
-    showStatus("Invoice saved. Opening print preview\u2026", "success");
+    showStatus("Your browser blocked local saving, but the print preview will still work for this session.", "error");
     window.location.href = "print-preview.html";
   }
 
   function handleFormReset() {
     window.setTimeout(function () {
+      invoiceIdInput.value = "";
       qs("#invoice-number").value = InvoiceApp.generateInvoiceNumber();
+      qs("#invoice-date").value = InvoiceApp.todayIsoDate();
+      qs("#due-date").value = "";
+      qs("#note-text").value = "Thank you for your business.";
+      noteTextField.hidden = false;
       itemsBody.innerHTML = "";
       taxRatesList.innerHTML = "";
       addTaxRateRow({ label: "Sales tax", rate: 9.5 });
@@ -497,6 +593,10 @@
       watermarkFields.hidden = true;
       handleWatermarkOpacityInput();
       handleWatermarkSizeInput();
+      watermarkPositionX.value = 50;
+      watermarkPositionY.value = 50;
+      handleWatermarkPositionXInput();
+      handleWatermarkPositionYInput();
       logoSize.value = 100;
       handleLogoSizeInput();
       hideStatus();
@@ -507,28 +607,25 @@
     }, 0);
   }
 
-  /* ---------- draft persistence ---------- */
+  /* ---------- invoice persistence ---------- */
 
-  function loadExistingDraft() {
-    var draft = InvoiceApp.loadDraft();
-    if (!draft) {
-      qs("#invoice-number").value = InvoiceApp.generateInvoiceNumber();
-      return;
-    }
-
-    qs("#invoice-number").value = draft.invoiceNumber || InvoiceApp.generateInvoiceNumber();
-    qs("#business-name").value = draft.business.name || "";
-    qs("#business-email").value = draft.business.email || "";
-    qs("#customer-name").value = draft.customer.name || "";
-    qs("#customer-email").value = draft.customer.email || "";
-    qs("#discount").value = draft.adjustments.discount;
-    qs("#fee").value = draft.adjustments.fee;
-    qs("#amount-paid").value = draft.adjustments.amountPaid;
+  function applyInvoiceToForm(invoice) {
+    invoiceIdInput.value = invoice.id || "";
+    qs("#invoice-number").value = invoice.invoiceNumber || InvoiceApp.generateInvoiceNumber();
+    qs("#invoice-date").value = invoice.invoiceDate || InvoiceApp.todayIsoDate();
+    qs("#due-date").value = invoice.dueDate || "";
+    qs("#business-name").value = invoice.business.name || "";
+    qs("#business-email").value = invoice.business.email || "";
+    qs("#customer-name").value = invoice.customer.name || "";
+    qs("#customer-email").value = invoice.customer.email || "";
+    qs("#discount").value = invoice.adjustments.discount;
+    qs("#fee").value = invoice.adjustments.fee;
+    qs("#amount-paid").value = invoice.adjustments.amountPaid;
 
     taxRateIdCounter = 0;
     taxRatesList.innerHTML = "";
     var idMap = {};
-    (draft.taxRates && draft.taxRates.length ? draft.taxRates : [{ label: "Sales tax", rate: 9.5 }]).forEach(function (rate) {
+    (invoice.taxRates && invoice.taxRates.length ? invoice.taxRates : [{ label: "Sales tax", rate: 9.5 }]).forEach(function (rate) {
       var oldId = rate.id;
       var newId = addTaxRateRow(rate);
       if (oldId) {
@@ -536,13 +633,13 @@
       }
     });
 
-    var savedDesign = draft.designStyle || "simple";
+    var savedDesign = invoice.designStyle || "simple";
     var radioToCheck = form.querySelector('input[name="designStyle"][value="' + savedDesign + '"]');
     if (radioToCheck) {
       radioToCheck.checked = true;
     }
 
-    var format = draft.format || {};
+    var format = invoice.format || {};
     qs("#show-logo").checked = format.showLogo !== false;
     logoFormatFields.hidden = !qs("#show-logo").checked;
     qs("#show-business-email").checked = format.showBusinessEmail !== false;
@@ -551,6 +648,8 @@
     qs("#show-divider-header").checked = format.showDividerAfterHeader !== false;
     qs("#show-divider-totals").checked = format.showDividerBeforeTotals !== false;
     qs("#show-note").checked = format.showNote !== false;
+    qs("#note-text").value = format.noteText != null ? format.noteText : "Thank you for your business.";
+    noteTextField.hidden = !qs("#show-note").checked;
 
     var savedLogoPosition = format.logoPosition || "top-right";
     var logoPositionRadio = form.querySelector('input[name="logoPosition"][value="' + savedLogoPosition + '"]');
@@ -586,6 +685,10 @@
     handleWatermarkOpacityInput();
     watermarkSize.value = format.watermarkSize || 135;
     handleWatermarkSizeInput();
+    watermarkPositionX.value = format.watermarkPositionX != null ? format.watermarkPositionX : 50;
+    watermarkPositionY.value = format.watermarkPositionY != null ? format.watermarkPositionY : 50;
+    handleWatermarkPositionXInput();
+    handleWatermarkPositionYInput();
 
     var savedWatermarkType = format.watermarkType || "text";
     var watermarkTypeRadio = form.querySelector('input[name="watermarkType"][value="' + savedWatermarkType + '"]');
@@ -600,18 +703,57 @@
       watermarkImagePreview.innerHTML = '<img src="' + currentWatermarkImageDataUrl + '" alt="Watermark image preview">';
     }
 
-    if (draft.business.logoDataUrl) {
-      currentLogoDataUrl = draft.business.logoDataUrl;
+    if (invoice.business.logoDataUrl) {
+      currentLogoDataUrl = invoice.business.logoDataUrl;
       logoPreview.innerHTML = '<img src="' + currentLogoDataUrl + '" alt="Business logo preview">';
     }
 
-    draft.items.forEach(function (item) {
+    invoice.items.forEach(function (item) {
       var mappedItem = Object.assign({}, item);
       if (item.taxRateId && idMap[item.taxRateId]) {
         mappedItem.taxRateId = idMap[item.taxRateId];
       }
       addRow(mappedItem);
     });
+
+    if (invoice.customer.name) {
+      openPanel(document.getElementById("section-customer"));
+    }
+    if (invoice.items.length) {
+      openPanel(document.getElementById("section-items"));
+    }
+  }
+
+  function loadExistingDraft() {
+    var draft = InvoiceApp.loadDraft();
+    if (!draft) {
+      qs("#invoice-number").value = InvoiceApp.generateInvoiceNumber();
+      qs("#invoice-date").value = InvoiceApp.todayIsoDate();
+      return;
+    }
+    applyInvoiceToForm(draft);
+  }
+
+  function getRequestedInvoiceId() {
+    var params = new URLSearchParams(window.location.search);
+    return params.get("id");
+  }
+
+  function loadRequestedHistoryInvoiceIfPresent() {
+    var requestedId = getRequestedInvoiceId();
+    if (!requestedId) {
+      return false;
+    }
+    var historyInvoice = InvoiceApp.getHistoryById(requestedId);
+    if (!historyInvoice) {
+      qs("#invoice-number").value = InvoiceApp.generateInvoiceNumber();
+      qs("#invoice-date").value = InvoiceApp.todayIsoDate();
+      showStatus("That saved invoice could not be found. Starting a new one.", "error");
+      return true;
+    }
+    applyInvoiceToForm(historyInvoice);
+    showStatus("Loaded \u201c" + (historyInvoice.invoiceNumber || "this invoice") + "\u201d from your saved invoices.", "success");
+    return true;
   }
 
   function loadTemplateFromUrlIfPresent() {
@@ -627,7 +769,9 @@
   function init() {
     renderTemplatePicker();
     addTaxRateRow({ label: "Sales tax", rate: 9.5 });
-    loadExistingDraft();
+    if (!loadRequestedHistoryInvoiceIfPresent()) {
+      loadExistingDraft();
+    }
     recalculateAndRender();
     loadTemplateFromUrlIfPresent();
 
@@ -671,8 +815,12 @@
 
     watermarkEnabled.addEventListener("change", handleWatermarkToggle);
     showLogoCheckbox.addEventListener("change", handleShowLogoToggle);
+    showNoteCheckbox.addEventListener("change", handleShowNoteToggle);
+    setUpPanelNavigation();
     watermarkOpacity.addEventListener("input", handleWatermarkOpacityInput);
     watermarkSize.addEventListener("input", handleWatermarkSizeInput);
+    watermarkPositionX.addEventListener("input", handleWatermarkPositionXInput);
+    watermarkPositionY.addEventListener("input", handleWatermarkPositionYInput);
     logoSize.addEventListener("input", handleLogoSizeInput);
     qsa('input[name="watermarkType"]', form).forEach(function (radio) {
       radio.addEventListener("change", handleWatermarkTypeChange);

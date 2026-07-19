@@ -41,8 +41,8 @@
 
   <main class="page-main" id="main-content">
     <div class="container">
-      <div class="future-banner">
-        <p class="future-banner__text">Future update &mdash; accounts aren't live yet</p>
+      <div class="future-banner future-banner--info">
+        <p class="future-banner__text">Accounts live on this device only &mdash; there's no server yet, so they don't sync across browsers or devices.</p>
       </div>
       <div class="auth-layout">
         <div class="card auth-card">
@@ -50,6 +50,7 @@
           <p class="auth-card__lede u-text-center">Create a free account to get started.</p>
 
           <form id="sign-up-form" novalidate>
+            <p class="auth-form-message" id="sign-up-message" role="status"></p>
             <div class="field">
               <label class="field__label" for="signup-email">Email</label>
               <input class="field__input" type="email" id="signup-email" name="email" placeholder="you@example.com" required aria-describedby="signup-email-error" aria-invalid="false">
@@ -59,8 +60,7 @@
             <div class="field">
               <label class="field__label" for="signup-password">Password</label>
               <input class="field__input" type="password" id="signup-password" name="password" required aria-describedby="signup-password-hint signup-password-error" aria-invalid="false">
-              <span class="field__hint password-requirements" id="signup-password-hint">At least 8 characters, with one uppercase letter, one lowercase letter, one number, and one symbol.</span>
-              <p class="field__error" id="signup-password-error">That password doesn't meet the requirements above.</p>
+              <p class="field__error" id="signup-password-error">That password doesn't meet the requirements below.</p>
             </div>
 
             <div class="field">
@@ -69,7 +69,20 @@
               <p class="field__error" id="signup-confirm-error">Passwords don't match.</p>
             </div>
 
+            <div class="password-hint" id="signup-password-hint">
+              <p class="field__hint password-hint__intro">Your password needs:</p>
+              <ul class="password-strength">
+                <li class="password-strength__item" data-rule="length"><span class="password-strength__status visually-hidden">Not yet: </span>8+ characters</li>
+                <li class="password-strength__item" data-rule="lower"><span class="password-strength__status visually-hidden">Not yet: </span>lowercase</li>
+                <li class="password-strength__item" data-rule="upper"><span class="password-strength__status visually-hidden">Not yet: </span>uppercase</li>
+                <li class="password-strength__item" data-rule="number"><span class="password-strength__status visually-hidden">Not yet: </span>a number</li>
+                <li class="password-strength__item" data-rule="symbol"><span class="password-strength__status visually-hidden">Not yet: </span>a symbol</li>
+              </ul>
+              <p class="field__hint" id="password-strength-summary" role="status"></p>
+            </div>
+
             <button type="submit" class="button button--primary button--full">Create account</button>
+            <p class="field__hint u-text-center u-mt-md">Your password is hashed on this device before it's stored. This protects against casual snooping, not a substitute for a real server-side account.</p>
           </form>
 
           <p class="auth-switch u-text-center">Already have an account? <a href="sign-in.html">Sign in</a></p>
@@ -92,6 +105,7 @@
   </footer>
 
   <script src="scripts/common.js" defer></script>
+  <script src="scripts/invoice-data.js" defer></script>
   <script src="scripts/auth.js" defer></script>
 </body>
 </html>

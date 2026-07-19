@@ -2,6 +2,13 @@
   display: grid;
   gap: var(--space-lg);
   align-items: stretch;
+  margin-top: var(--space-lg);
+}
+
+.pricing-page-lede {
+  max-width: 44rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (min-width: 56rem) {
@@ -22,29 +29,38 @@
 }
 
 /*
-  The two not-yet-available tiers get a faint diagonal hatch on top of
-  the muted gradient, reinforcing "not here yet" without needing extra
-  wording. Light grey lines against transparent gaps read as a soft,
-  half-strength pattern while staying within named CSS colors.
+  Planned pricing tiers stay grey, but the diagonal hatch is removed so
+  every heading, price, and feature remains easy to read.
 */
 .pricing-card.card--muted {
+  background-color: var(--color-surface-muted);
   background-image:
-    repeating-linear-gradient(45deg, lightgray 0, lightgray 0.0625rem, transparent 0.0625rem, transparent 0.75rem),
     linear-gradient(135deg, var(--color-surface-muted), white, var(--color-surface-muted)),
     var(--gradient-muted);
   background-origin: border-box;
-  background-clip: padding-box, padding-box, border-box;
+  background-clip: padding-box, border-box;
+}
+
+.pricing-card.card--striped::before {
+  display: none;
 }
 
 .pricing-card__price {
   font-size: var(--font-size-xlarge);
   font-weight: 700;
   color: var(--color-text-heading);
-  margin: var(--space-sm) 0 var(--space-md);
+  margin: var(--space-sm) 0 var(--space-2xs);
 }
 
 .pricing-card.is-selected .pricing-card__price {
   color: var(--color-brand-primary-strong);
+}
+
+.pricing-card__pitch {
+  font-size: var(--font-size-small);
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md);
 }
 
 .pricing-card__features {

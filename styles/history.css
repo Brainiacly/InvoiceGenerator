@@ -1,1 +1,107 @@
-/* */ 
+.history-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.history-header h2 {
+  margin-bottom: var(--space-2xs);
+}
+
+.history-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius-medium);
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--color-surface);
+}
+
+@media (min-width: 48rem) {
+  .history-item {
+    grid-template-columns: 2fr 1fr auto;
+    align-items: center;
+  }
+}
+
+.history-item__number {
+  font-weight: 700;
+  font-size: var(--font-size-medium);
+  color: var(--color-text-heading);
+  margin: 0 0 var(--space-2xs);
+}
+
+.history-item__customer {
+  margin: 0 0 var(--space-2xs);
+  color: var(--color-text-body);
+}
+
+.history-item__meta {
+  margin: 0;
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.history-item__amount {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+@media (min-width: 48rem) {
+  .history-item__amount {
+    text-align: right;
+  }
+}
+
+.history-item__amount-label {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+
+.history-item__amount-value {
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  color: var(--color-brand-primary-strong);
+}
+
+.history-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+@media (min-width: 48rem) {
+  .history-item__actions {
+    justify-content: flex-end;
+  }
+}
+
+.account-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.account-banner__text {
+  margin: 0;
+  color: var(--color-text-body);
+}
+
+.account-banner__text strong {
+  color: var(--color-text-heading);
+}

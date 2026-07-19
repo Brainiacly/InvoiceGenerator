@@ -20,8 +20,8 @@
 
   /* text */
   --color-text-heading: black;
-  --color-text-body: darkslategray;
-  --color-text-muted: dimgray;
+  --color-text-body: black;
+  --color-text-muted: darkslategray;
   --color-text-on-dark: white;
   --color-text-link: mediumblue;
 
@@ -49,6 +49,11 @@
 
   /* accessibility */
   --color-focus-ring: orangered;
+
+  /* print only: a darker neutral than --color-divider so table rules
+     stay visible on paper, where the screen palette's light blues and
+     greys tend to wash out */
+  --color-print-rule: dimgray;
 
   /* elevation: two-tone offset shadows (light top-left, dark bottom-right)
      used as this site's signature card treatment, scaled by importance.
@@ -89,9 +94,9 @@
   --color-step-badge: royalblue;
 
   /* type */
-  --font-family-base: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-base: Arial, Helvetica, sans-serif;
   --font-family-serif: Cambria, "Times New Roman", Georgia, Times, serif;
-  --font-size-small: 0.8125rem;
+  --font-size-small: 0.875rem;
   --font-size-base: 1rem;
   --font-size-medium: 1.125rem;
   --font-size-large: 1.5rem;

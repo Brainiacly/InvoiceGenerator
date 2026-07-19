@@ -19,3 +19,62 @@
   border-radius: var(--radius-large);
   padding: var(--space-lg);
 }
+
+.copies-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.copies-grid__copy-label {
+  font-size: var(--font-size-small);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-xs);
+}
+
+#pairing-select:disabled {
+  color: var(--color-text-muted);
+}
+
+/*
+  Off-screen, laid out at the exact size and font-scale a compact copy
+  gets in print, so JS can measure its real scrollHeight and decide
+  whether the compact tiled layout will actually fit before printing.
+*/
+.print-fit-probe {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.print-fit-probe .invoice {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.print-fit-probe--2up {
+  width: 6.8in;
+  height: 4.4in;
+  font-size: 11pt;
+}
+
+.print-fit-probe--2up .invoice {
+  font-size: 0.85em;
+}
+
+.print-fit-probe--4up {
+  width: 3.15in;
+  height: 4.4in;
+  font-size: 11pt;
+}
+
+.print-fit-probe--4up .invoice {
+  font-size: 0.68em;
+}

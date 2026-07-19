@@ -1,6 +1,9 @@
 var InvoiceApp = window.InvoiceApp || {};
 
 InvoiceApp.STORAGE_KEY = "invoiceGeneratorDraft";
+InvoiceApp.HISTORY_KEY = "invoiceGeneratorHistory";
+InvoiceApp.ACCOUNTS_KEY = "invoiceGeneratorAccounts";
+InvoiceApp.SESSION_KEY = "invoiceGeneratorSession";
 
 InvoiceApp.formatCurrency = function (amount) {
   var safeAmount = Number.isFinite(amount) ? amount : 0;
@@ -67,9 +70,119 @@ InvoiceApp.generateInvoiceNumber = function () {
   return "INV-" + randomDigits;
 };
 
+InvoiceApp.generateId = function () {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return window.crypto.randomUUID();
+  }
+  return "inv-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8);
+};
+
+InvoiceApp.todayIsoDate = function () {
+  var now = new Date();
+  var month = String(now.getMonth() + 1).padStart(2, "0");
+  var day = String(now.getDate()).padStart(2, "0");
+  return now.getFullYear() + "-" + month + "-" + day;
+};
+
+InvoiceApp.getSession = function () {
+  try {
+    var raw = window.localStorage.getItem(InvoiceApp.SESSION_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (error) {
+    return null;
+  }
+};
+
+InvoiceApp.setSession = function (session) {
+  try {
+    window.localStorage.setItem(InvoiceApp.SESSION_KEY, JSON.stringify(session));
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+InvoiceApp.clearSession = function () {
+  try {
+    window.localStorage.removeItem(InvoiceApp.SESSION_KEY);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+InvoiceApp.listAccounts = function () {
+  try {
+    var raw = window.localStorage.getItem(InvoiceApp.ACCOUNTS_KEY);
+    var parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+};
+
+InvoiceApp.findAccountByEmail = function (email) {
+  var normalized = String(email || "").trim().toLowerCase();
+  if (!normalized) {
+    return null;
+  }
+  var match = InvoiceApp.listAccounts().filter(function (account) {
+    return String(account.email || "").toLowerCase() === normalized;
+  })[0];
+  return match || null;
+};
+
+InvoiceApp.createAccount = function (accountDetails) {
+  try {
+    var accounts = InvoiceApp.listAccounts();
+    var account = {
+      id: InvoiceApp.generateId(),
+      email: String(accountDetails.email || "").trim(),
+      passwordHash: accountDetails.passwordHash,
+      passwordSalt: accountDetails.passwordSalt,
+      createdAt: new Date().toISOString()
+    };
+    accounts.push(account);
+    window.localStorage.setItem(InvoiceApp.ACCOUNTS_KEY, JSON.stringify(accounts));
+    return account;
+  } catch (error) {
+    return null;
+  }
+};
+
+InvoiceApp.getStorageKeyForCurrentUser = function (baseKey) {
+  var session = InvoiceApp.getSession();
+  return session && session.accountId ? baseKey + ":" + session.accountId : baseKey;
+};
+
+InvoiceApp.migrateGuestDataToAccount = function (accountId) {
+  try {
+    var namespacedHistoryKey = InvoiceApp.HISTORY_KEY + ":" + accountId;
+    var namespacedDraftKey = InvoiceApp.STORAGE_KEY + ":" + accountId;
+
+    var guestHistoryRaw = window.localStorage.getItem(InvoiceApp.HISTORY_KEY);
+    if (guestHistoryRaw && !window.localStorage.getItem(namespacedHistoryKey)) {
+      window.localStorage.setItem(namespacedHistoryKey, guestHistoryRaw);
+      window.localStorage.removeItem(InvoiceApp.HISTORY_KEY);
+    }
+
+    var guestDraftRaw = window.localStorage.getItem(InvoiceApp.STORAGE_KEY);
+    if (guestDraftRaw && !window.localStorage.getItem(namespacedDraftKey)) {
+      window.localStorage.setItem(namespacedDraftKey, guestDraftRaw);
+      window.localStorage.removeItem(InvoiceApp.STORAGE_KEY);
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 InvoiceApp.createEmptyInvoice = function () {
   return {
+    id: "",
     invoiceNumber: InvoiceApp.generateInvoiceNumber(),
+    invoiceDate: InvoiceApp.todayIsoDate(),
+    dueDate: "",
     business: { name: "", email: "", logoDataUrl: "" },
     customer: { name: "", email: "" },
     items: [],
@@ -86,6 +199,7 @@ InvoiceApp.createEmptyInvoice = function () {
       showDividerAfterHeader: true,
       showDividerBeforeTotals: true,
       showNote: true,
+      noteText: "Thank you for your business.",
       logoPosition: "top-right",
       logoShape: "ellipse",
       logoNameDisplay: "inside",
@@ -96,7 +210,9 @@ InvoiceApp.createEmptyInvoice = function () {
       watermarkText: "SAMPLE",
       watermarkImageDataUrl: "",
       watermarkOpacity: 8,
-      watermarkSize: 135
+      watermarkSize: 135,
+      watermarkPositionX: 50,
+      watermarkPositionY: 50
     }
   };
 };
@@ -174,7 +290,8 @@ InvoiceApp.calculateTotals = function (invoice) {
 
 InvoiceApp.saveDraft = function (invoice) {
   try {
-    window.localStorage.setItem(InvoiceApp.STORAGE_KEY, JSON.stringify(invoice));
+    var key = InvoiceApp.getStorageKeyForCurrentUser(InvoiceApp.STORAGE_KEY);
+    window.localStorage.setItem(key, JSON.stringify(invoice));
     return true;
   } catch (error) {
     return false;
@@ -183,13 +300,17 @@ InvoiceApp.saveDraft = function (invoice) {
 
 InvoiceApp.loadDraft = function () {
   try {
-    var raw = window.localStorage.getItem(InvoiceApp.STORAGE_KEY);
+    var key = InvoiceApp.getStorageKeyForCurrentUser(InvoiceApp.STORAGE_KEY);
+    var raw = window.localStorage.getItem(key);
     if (!raw) {
       return null;
     }
     var parsed = JSON.parse(raw);
     var withDefaults = InvoiceApp.createEmptyInvoice();
+    withDefaults.id = parsed.id || withDefaults.id;
     withDefaults.invoiceNumber = parsed.invoiceNumber || withDefaults.invoiceNumber;
+    withDefaults.invoiceDate = parsed.invoiceDate || withDefaults.invoiceDate;
+    withDefaults.dueDate = parsed.dueDate || withDefaults.dueDate;
     withDefaults.business = Object.assign(withDefaults.business, parsed.business);
     withDefaults.customer = Object.assign(withDefaults.customer, parsed.customer);
     withDefaults.items = parsed.items || [];
@@ -201,6 +322,84 @@ InvoiceApp.loadDraft = function () {
   } catch (error) {
     return null;
   }
+};
+
+InvoiceApp.listHistory = function () {
+  try {
+    var key = InvoiceApp.getStorageKeyForCurrentUser(InvoiceApp.HISTORY_KEY);
+    var raw = window.localStorage.getItem(key);
+    if (!raw) {
+      return [];
+    }
+    var parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    return [];
+  }
+};
+
+InvoiceApp.getHistoryById = function (id) {
+  if (!id) {
+    return null;
+  }
+  var match = InvoiceApp.listHistory().filter(function (entry) {
+    return entry.id === id;
+  })[0];
+  return match || null;
+};
+
+InvoiceApp.saveToHistory = function (invoice) {
+  try {
+    var key = InvoiceApp.getStorageKeyForCurrentUser(InvoiceApp.HISTORY_KEY);
+    var entries = InvoiceApp.listHistory();
+    var id = invoice.id || InvoiceApp.generateId();
+    var record = JSON.parse(JSON.stringify(invoice));
+    record.id = id;
+    record.savedAt = new Date().toISOString();
+
+    var existingIndex = -1;
+    entries.forEach(function (entry, index) {
+      if (entry.id === id) {
+        existingIndex = index;
+      }
+    });
+
+    if (existingIndex === -1) {
+      entries.unshift(record);
+    } else {
+      entries[existingIndex] = record;
+    }
+
+    window.localStorage.setItem(key, JSON.stringify(entries));
+    return record;
+  } catch (error) {
+    return null;
+  }
+};
+
+InvoiceApp.deleteFromHistory = function (id) {
+  try {
+    var key = InvoiceApp.getStorageKeyForCurrentUser(InvoiceApp.HISTORY_KEY);
+    var entries = InvoiceApp.listHistory().filter(function (entry) {
+      return entry.id !== id;
+    });
+    window.localStorage.setItem(key, JSON.stringify(entries));
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+InvoiceApp.duplicateHistoryEntry = function (id) {
+  var original = InvoiceApp.getHistoryById(id);
+  if (!original) {
+    return null;
+  }
+  var copy = JSON.parse(JSON.stringify(original));
+  copy.id = InvoiceApp.generateId();
+  copy.invoiceNumber = InvoiceApp.generateInvoiceNumber();
+  copy.invoiceDate = InvoiceApp.todayIsoDate();
+  return InvoiceApp.saveToHistory(copy);
 };
 
 function escapeHtml(value) {
@@ -252,6 +451,14 @@ function clampWatermarkSize(format) {
   return Math.max(40, Math.min(200, sizePercent));
 }
 
+function clampWatermarkPosition(value) {
+  var position = Number(value);
+  if (!Number.isFinite(position)) {
+    position = 50;
+  }
+  return Math.max(15, Math.min(85, position));
+}
+
 function buildWatermarkMarkup(invoice) {
   var format = invoice.format;
   if (!format.watermarkEnabled) {
@@ -259,7 +466,10 @@ function buildWatermarkMarkup(invoice) {
   }
   var opacityPercent = clampWatermarkOpacity(format);
   var sizeScale = clampWatermarkSize(format) / 100;
+  var positionX = clampWatermarkPosition(format.watermarkPositionX);
+  var positionY = clampWatermarkPosition(format.watermarkPositionY);
   var sizeStyle = "--watermark-scale: " + sizeScale + ";";
+  var positionStyle = "--watermark-left: " + positionX + "%; --watermark-top: " + positionY + "%;";
   var opacityStyle = "opacity: " + (opacityPercent / 100) + ";";
 
   if (format.watermarkType === "image") {
@@ -268,17 +478,29 @@ function buildWatermarkMarkup(invoice) {
       return "";
     }
     return '<img class="invoice__watermark invoice__watermark--image" src="' + watermarkImageSrc +
-      '" alt="" aria-hidden="true" style="' + opacityStyle + sizeStyle + '">';
+      '" alt="" aria-hidden="true" style="' + opacityStyle + sizeStyle + positionStyle + '">';
   }
 
   if (!format.watermarkText) {
     return "";
   }
   return (
-    '<span class="invoice__watermark invoice__watermark--text" aria-hidden="true" style="' + opacityStyle + sizeStyle + '">' +
+    '<span class="invoice__watermark invoice__watermark--text" aria-hidden="true" style="' + opacityStyle + sizeStyle + positionStyle + '">' +
     escapeHtml(format.watermarkText) +
     "</span>"
   );
+}
+
+function formatDisplayDate(isoDate) {
+  var parts = String(isoDate).split("-");
+  if (parts.length !== 3) {
+    return isoDate;
+  }
+  var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+  if (isNaN(date.getTime())) {
+    return isoDate;
+  }
+  return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 }
 
 function findTaxRateLabel(invoice, taxRateId) {
@@ -337,6 +559,12 @@ InvoiceApp.renderInvoiceMarkup = function (invoice) {
   if (format.showCustomerEmail && invoice.customer.email) {
     metaLines += "<span>" + escapeHtml(invoice.customer.email) + "</span>";
   }
+  if (invoice.invoiceDate) {
+    metaLines += "<span>Invoice date: " + escapeHtml(formatDisplayDate(invoice.invoiceDate)) + "</span>";
+  }
+  if (invoice.dueDate) {
+    metaLines += "<span>Due: " + escapeHtml(formatDisplayDate(invoice.dueDate)) + "</span>";
+  }
 
   var totalsRows = '<div class="totals__row"><span>Subtotal</span><span>' + InvoiceApp.formatCurrency(totals.subtotal) + "</span></div>";
 
@@ -377,7 +605,7 @@ InvoiceApp.renderInvoiceMarkup = function (invoice) {
     "</tr></thead><tbody>" + rowsMarkup + "</tbody></table></div>" +
     (format.showDividerBeforeTotals ? '<hr class="invoice__rule">' : "") +
     '<div class="totals">' + totalsRows + "</div>" +
-    (format.showNote ? '<p class="invoice__note">No watermarks. Save, print, or email your invoice.</p>' : "") +
+    (format.showNote && format.noteText ? '<p class="invoice__note">' + escapeHtml(format.noteText) + "</p>" : "") +
     (showLogoBottom ? buildLogoBadgeMarkup(invoice, "invoice__logo--" + logoPosition) : "") +
     "</div>"
   );
