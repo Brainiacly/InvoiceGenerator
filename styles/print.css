@@ -65,6 +65,19 @@
     color: var(--color-text-body) !important;
   }
 
+  /*
+    The Modern design's header keeps its blue background and white text
+    on purpose, on screen and on paper alike. The blanket black-text
+    rule above exists for the plain white parts of every design, but it
+    would otherwise force black text onto that same blue background,
+    which is unreadable. This wins on specificity (two classes) over the
+    single-class rule above, so the header stays white-on-blue in print.
+  */
+  .invoice--modern .invoice__header,
+  .invoice--modern .invoice__header * {
+    color: var(--color-text-on-dark) !important;
+  }
+
   .invoice__rule {
     border-top-color: var(--color-text-body) !important;
   }
