@@ -59,36 +59,6 @@
             <p class="field__hint">No watermark. The saved invoice belongs to you and can be stored for records.</p>
           </div>
 
-          <div class="card" id="copies-card">
-            <h2>Copies on this page</h2>
-            <p class="card__lede">Print more than one copy per sheet, or pair this invoice with a different saved one.</p>
-            <div class="option-picker" role="group" aria-labelledby="copies-card-label">
-              <span class="visually-hidden" id="copies-card-label">Copies per page</span>
-              <label class="option-picker__choice">
-                <input type="radio" name="copiesPerPage" value="1" checked>
-                <span>1 up</span>
-              </label>
-              <label class="option-picker__choice">
-                <input type="radio" name="copiesPerPage" value="2">
-                <span>2 up</span>
-              </label>
-              <label class="option-picker__choice">
-                <input type="radio" name="copiesPerPage" value="4">
-                <span>4 up</span>
-              </label>
-            </div>
-
-            <div class="field u-mt-md" id="pairing-field" hidden>
-              <label class="field__label" for="pairing-select">Second invoice on this page</label>
-              <select class="field__select" id="pairing-select">
-                <option value="">Duplicate this invoice</option>
-              </select>
-              <span class="field__hint">Useful when two jobs are ready at once and you'd rather not waste a sheet.</span>
-            </div>
-
-            <p class="field__hint u-mt-md" id="copies-status" role="status"></p>
-          </div>
-
           <div class="card">
             <h2>What actually prints</h2>
             <ul class="feature-list">
@@ -132,30 +102,9 @@
 
         <div id="invoice-print-area">
           <h2 class="visually-hidden">Invoice</h2>
-          <div class="copies-grid" id="copies-grid" data-copies="1">
-            <div class="copies-grid__copy">
-              <p class="copies-grid__copy-label">Copy 1</p>
-              <div class="invoice" id="invoice-preview">
-                <p class="invoice--empty">No saved invoice yet. <a href="builder.html">Build an invoice</a> to see it here.</p>
-              </div>
-            </div>
-            <div class="copies-grid__copy" id="copy-slot-2" hidden>
-              <p class="copies-grid__copy-label">Copy 2</p>
-              <div class="invoice" id="invoice-preview-2"></div>
-            </div>
-            <div class="copies-grid__copy" id="copy-slot-3" hidden>
-              <p class="copies-grid__copy-label">Copy 3</p>
-              <div class="invoice" id="invoice-preview-3"></div>
-            </div>
-            <div class="copies-grid__copy" id="copy-slot-4" hidden>
-              <p class="copies-grid__copy-label">Copy 4</p>
-              <div class="invoice" id="invoice-preview-4"></div>
-            </div>
+          <div class="invoice" id="invoice-preview">
+            <p class="invoice--empty">No saved invoice yet. <a href="builder.html">Build an invoice</a> to see it here.</p>
           </div>
-        </div>
-
-        <div class="print-fit-probe no-print" id="print-fit-probe" aria-hidden="true">
-          <div class="invoice" id="print-fit-probe-invoice"></div>
         </div>
       </div>
     </div>
